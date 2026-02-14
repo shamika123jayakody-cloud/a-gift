@@ -191,48 +191,50 @@
             }, 250);
         }
     </script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
 <script>
-  // මෙන්න මේ apiKey එක විතරක් ඔයාගේ එකෙන් වෙනස් කරන්න
+  // ඔයාගේ Screenshot එකේ තිබුණු Config එක මම මෙතනට දැම්මා
   const firebaseConfig = {
-    apiKey: "AIzaSy...", // ඔයාගේ 'Config' ටැබ් එකේ තියෙන apiKey එක මෙතනට දාන්න
+    apiKey: "AIzaSyAr65gjzsOIsJA_rKhA9Lt1ogqARryIgTw",
     authDomain: "lovetracker-eff68.firebaseapp.com",
-    databaseURL: "https://lovetracker-eff68-default-rtdb.firebaseio.com",
     projectId: "lovetracker-eff68",
-    storageBucket: "lovetracker-eff68.appspot.com",
+    storageBucket: "lovetracker-eff68.firebasestorage.app",
     messagingSenderId: "1064136647164",
-    appId: "1:1064136647164:web:b94120efd78aedd403d279"
+    appId: "1:1064136647164:web:b94120efd78aedd403d279",
+    measurementId: "G-S7PYQSM23X",
+    databaseURL: "https://lovetracker-eff68-default-rtdb.firebaseio.com"
   };
 
-  // Firebase Initialization
+  // Firebase Initialize කිරීම
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
 
-  // දත්ත රෙකෝඩ් කරන function එක
-  function logActivity(action) {
-    db.ref('valentine_activity').push({
-      event: action,
+  // දත්ත සේව් කරන රහස් function එක
+  function logActivity(message) {
+    db.ref('tracker').push({
+      event: message,
       time: new Date().toLocaleString()
     });
   }
 
-  // සයිට් එක ඕපන් කරපු ගමන් ලොග් වේ
+  // සයිට් එක ඕපන් කරපු ගමන් ලොග් එකක් යයි
   logActivity("Site Opened");
 
-  // කලින් තිබ්බ functions වලට ලොග් එකතු කිරීම
+  // කලින් තිබුණු checkPassword function එකට tracking එකතු කිරීම
   const originalCheckPassword = checkPassword;
   checkPassword = function() {
     const pass = document.getElementById('passInput').value;
     if (pass === "2024109") {
-      logActivity("Password Correct");
+      logActivity("Password Correct - Unlocked");
     } else {
-      logActivity("Wrong Password Tried: " + pass);
+      logActivity("Wrong Password: " + pass);
     }
     originalCheckPassword();
   };
 
+  // කලින් තිබුණු showLove function එකට tracking එකතු කිරීම
   const originalShowLove = showLove;
   showLove = function() {
     logActivity("Clicked YES! ❤️");
@@ -241,4 +243,5 @@
 </script>
 </body>
 </html>
+
 

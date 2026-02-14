@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Someone Special ❤️</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: radial-gradient(circle, #fff5f5, #ffdde1);
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        /* --- Login Section --- */
+        #login-section {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        #login-section h2 { color: #d32f2f; margin-bottom: 20px; }
+        #passInput {
+            padding: 12px;
+            font-size: 18px;
+            border: 2px solid #ffdde1;
+            border-radius: 10px;
+            outline: none;
+            width: 200px;
+            text-align: center;
+        }
+        #loginBtn {
+            padding: 12px 25px;
+            font-size: 18px;
+            background-color: #ff4d6d;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        /* --- Main Content (Hidden Initially) --- */
+        #main-content { display: none; }
+
+        /* CSS Heart */
+        .heart {
+            background-color: #ff4d6d;
+            display: inline-block;
+            height: 50px;
+            margin: 0 10px;
+            position: relative;
+            transform: rotate(-45deg);
+            width: 50px;
+            animation: beat 0.8s infinite alternate;
+            margin-bottom: 50px;
+        }
+        .heart:before, .heart:after {
+            background-color: #ff4d6d;
+            content: "";
+            border-radius: 50%;
+            height: 50px;
+            position: absolute;
+            width: 50px;
+        }
+        .heart:before { top: -25px; left: 0; }
+        .heart:after { left: 25px; top: 0; }
+        @keyframes beat { to { transform: scale(1.2) rotate(-45deg); } }
+
+        h1 { color: #d32f2f; font-size: 1.8rem; }
+
+        .buttons { 
+            margin-top: 30px; 
+            position: relative; 
+            height: 200px; 
+            width: 100vw;
+        }
+        
+        button {
+            padding: 15px 35px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            border-radius: 50px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        #yesBtn { background-color: #ff4d6d; color: white; z-index: 100; }
+
+        #noBtn { 
+            background-color: #6c757d; 
+            color: white; 
+            position: absolute;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 99;
+            left: 55%;
+        }
+
+        /* --- Result Section --- */
+        #result { display: none; animation: fadeIn 1.5s; }
+        #result img { 
+            width: 280px; 
+            border: 8px solid white; 
+            border-radius: 15px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+
+        .love-message {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #4a4a4a;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #ff4d6d;
+            max-width: 400px;
+            margin: 10px auto;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+    </style>
+</head>
+<body>
+
+    <div id="login-section">
+        <h2>හඳුනාගැනීමේ අංකය ඇතුළත් කරන්න ❤️</h2>
+        <input type="password" id="passInput" placeholder="Password...">
+        <br>
+        <button id="loginBtn" onclick="checkPassword()">Unlock</button>
+    </div>
+
+    <div id="main-content">
+        <div class="heart"></div>
+        <h1>Will you be my Valentine? ❤️</h1>
+        <div class="buttons">
+            <button id="yesBtn" onclick="showLove()">Yes!</button>
+            <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
+        </div>
+    </div>
+
+    <div id="result">
+        <h1>මම දන්නව ඔයා කැමතී කියල පැටියෝ 🥰</h1>
+        <img src="WhatsApp Image 2025-07-14 at 9.04.45 PM.jpeg" alt="Our Photo">
+        <div class="love-message">
+            <b>"මං ඔයාට ගොඩාරියක් ආදරෙයි මැණික , <br>
+            පහුගිය දවස් ටිකේ මම නිසා ඔයාව දුකින් තියපු දේවල් <br> මං වෙනුවෙන් අමතක කරන්න , <br>
+            මං ඔයාව මගේම කරගන්නවමයි , පොරොන්දු වෙනව !! <br>
+            ඔයා දැන් ඔය හිනා වෙලා ඉන්නව වගේම <br> හැමදාම හිනා වෙලා ඉන්න ඕනේ හරිද ?? ❤️"</b>
+        </div>
+    </div>
+
+    <script>
+        function checkPassword() {
+            const pass = document.getElementById('passInput').value;
+            if (pass === "2024109") {
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+            } else {
+                alert("වැරදි අංකයක්! ආයෙත් උත්සාහ කරන්න. ❤️");
+            }
+        }
+
+        function moveButton() {
+            const btn = document.getElementById('noBtn');
+            const padding = 60;
+            const maxWidth = window.innerWidth - btn.offsetWidth - padding;
+            const maxHeight = window.innerHeight - btn.offsetHeight - padding;
+
+            const randomX = Math.max(padding, Math.floor(Math.random() * maxWidth));
+            const randomY = Math.max(padding, Math.floor(Math.random() * maxHeight));
+
+            btn.style.position = "fixed";
+            btn.style.left = randomX + "px";
+            btn.style.top = randomY + "px";
+        }
+
+        function showLove() {
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('result').style.display = 'block';
+            
+            var duration = 5 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            var interval = setInterval(function() {
+                var timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) return clearInterval(interval);
+                var particleCount = 50 * (timeLeft / duration);
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: Math.random(), y: Math.random() - 0.2 } }));
+            }, 250);
+        }
+    </script>
+
+</body>
+</html>

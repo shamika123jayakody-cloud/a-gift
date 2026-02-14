@@ -16,77 +16,64 @@
             font-family: 'Arial', sans-serif;
             text-align: center;
             margin: 0;
-            overflow: hidden;
+            /* overflow: hidden; අයින් කළා ෆෝන් එකේ ස්ක්‍රෝල් වෙන්න ඕන නිසා */
         }
 
-        /* --- Login Section --- */
+        /* Login Section */
         #login-section {
             background: white;
             padding: 30px;
             border-radius: 20px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             z-index: 1000;
+            margin: 20px;
         }
-        #login-section h2 { color: #d32f2f; margin-bottom: 20px; }
+        #login-section h2 { color: #d32f2f; font-size: 1.2rem; }
         #passInput {
             padding: 12px;
             font-size: 18px;
             border: 2px solid #ffdde1;
             border-radius: 10px;
-            outline: none;
-            width: 200px;
+            width: 80%;
+            max-width: 200px;
             text-align: center;
         }
-        #loginBtn {
-            padding: 12px 25px;
-            font-size: 18px;
-            background-color: #ff4d6d;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            margin-top: 15px;
-        }
 
-        /* --- Main Content (Hidden Initially) --- */
-        #main-content { display: none; }
+        /* Main Content */
+        #main-content { display: none; width: 100%; }
 
-        /* CSS Heart */
         .heart {
             background-color: #ff4d6d;
             display: inline-block;
-            height: 50px;
-            margin: 0 10px;
+            height: 40px;
+            margin: 20px auto;
             position: relative;
             transform: rotate(-45deg);
-            width: 50px;
+            width: 40px;
             animation: beat 0.8s infinite alternate;
-            margin-bottom: 50px;
         }
         .heart:before, .heart:after {
             background-color: #ff4d6d;
             content: "";
             border-radius: 50%;
-            height: 50px;
+            height: 40px;
             position: absolute;
-            width: 50px;
+            width: 40px;
         }
-        .heart:before { top: -25px; left: 0; }
-        .heart:after { left: 25px; top: 0; }
-        @keyframes beat { to { transform: scale(1.2) rotate(-45deg); } }
-
-        h1 { color: #d32f2f; font-size: 1.8rem; }
+        .heart:before { top: -20px; left: 0; }
+        .heart:after { left: 20px; top: 0; }
+        @keyframes beat { to { transform: scale(1.1) rotate(-45deg); } }
 
         .buttons { 
-            margin-top: 30px; 
+            margin-top: 20px; 
             position: relative; 
-            height: 200px; 
-            width: 100vw;
+            height: 250px; /* දුවන්න ඉඩ වැඩි කළා */
+            width: 100%;
         }
         
         button {
-            padding: 15px 35px;
-            font-size: 20px;
+            padding: 12px 28px;
+            font-size: 18px;
             font-weight: bold;
             cursor: pointer;
             border: none;
@@ -94,41 +81,49 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        #yesBtn { background-color: #ff4d6d; color: white; z-index: 100; }
-
+        #yesBtn { background-color: #ff4d6d; color: white; }
         #noBtn { 
             background-color: #6c757d; 
             color: white; 
             position: absolute;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 99;
-            left: 55%;
+            transition: all 0.3s ease;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
-        /* --- Result Section --- */
-        #result { display: none; animation: fadeIn 1.5s; }
+        /* Result Section */
+        #result { 
+            display: none; 
+            animation: fadeIn 1s; 
+            padding: 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
         #result img { 
-            width: 280px; 
-            border: 8px solid white; 
+            width: 90%; 
+            max-width: 280px; 
+            border: 6px solid white; 
             border-radius: 15px; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
 
         .love-message {
-            font-size: 1.1rem;
-            line-height: 1.8;
+            font-size: 1rem;
+            line-height: 1.6;
             color: #4a4a4a;
             background: rgba(255, 255, 255, 0.95);
-            padding: 25px;
+            padding: 20px;
             border-radius: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             border-left: 5px solid #ff4d6d;
-            max-width: 400px;
-            margin: 10px auto;
+            max-width: 320px;
+            margin: 20px auto;
+            text-align: center;
+            word-wrap: break-word; /* දිග වචන කැඩෙන්න */
         }
 
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -137,12 +132,12 @@
         <h2>හඳුනාගැනීමේ අංකය ඇතුළත් කරන්න ❤️</h2>
         <input type="password" id="passInput" placeholder="Password...">
         <br>
-        <button id="loginBtn" onclick="checkPassword()">Unlock</button>
+        <button id="loginBtn" onclick="checkPassword()" style="background-color: #ff4d6d; color: white; border-radius: 10px; margin-top: 10px;">Unlock</button>
     </div>
 
     <div id="main-content">
         <div class="heart"></div>
-        <h1>Will you be my Valentine? ❤️</h1>
+        <h1 style="font-size: 1.5rem;">Will you be my Valentine? ❤️</h1>
         <div class="buttons">
             <button id="yesBtn" onclick="showLove()">Yes!</button>
             <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
@@ -150,7 +145,7 @@
     </div>
 
     <div id="result">
-        <h1>මම දන්නව ඔයා කැමතී කියල පැටියෝ 🥰</h1>
+        <h1 style="font-size: 1.3rem;">මම දන්නව ඔයා කැමතී කියල පැටියෝ 🥰</h1>
         <img src="WhatsApp Image 2025-07-14 at 9.04.45 PM.jpeg" alt="Our Photo">
         <div class="love-message">
             <b>"මං ඔයාට ගොඩාරියක් ආදරෙයි මැණික , <br>
@@ -162,46 +157,35 @@
 
     <script>
         function checkPassword() {
-            const pass = document.getElementById('passInput').value;
-            if (pass === "2024109") {
+            if (document.getElementById('passInput').value === "2024109") {
                 document.getElementById('login-section').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
-            } else {
-                alert("වැරදි අංකයක්! ආයෙත් උත්සාහ කරන්න. ❤️");
-            }
+            } else { alert("වැරදි අංකයක්! ❤️"); }
         }
 
         function moveButton() {
             const btn = document.getElementById('noBtn');
-            const padding = 60;
+            const padding = 40;
             const maxWidth = window.innerWidth - btn.offsetWidth - padding;
             const maxHeight = window.innerHeight - btn.offsetHeight - padding;
-
-            const randomX = Math.max(padding, Math.floor(Math.random() * maxWidth));
-            const randomY = Math.max(padding, Math.floor(Math.random() * maxHeight));
-
             btn.style.position = "fixed";
-            btn.style.left = randomX + "px";
-            btn.style.top = randomY + "px";
+            btn.style.left = Math.max(padding, Math.random() * maxWidth) + "px";
+            btn.style.top = Math.max(padding, Math.random() * maxHeight) + "px";
         }
 
         function showLove() {
+            document.body.style.overflow = "auto"; // මැසේජ් එක ආවාම ස්ක්‍රෝල් වෙන්න ඉඩ දුන්නා
             document.getElementById('main-content').style.display = 'none';
             document.getElementById('result').style.display = 'block';
             
             var duration = 5 * 1000;
             var animationEnd = Date.now() + duration;
-            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
-
             var interval = setInterval(function() {
                 var timeLeft = animationEnd - Date.now();
                 if (timeLeft <= 0) return clearInterval(interval);
-                var particleCount = 50 * (timeLeft / duration);
-                confetti(Object.assign({}, defaults, { particleCount, origin: { x: Math.random(), y: Math.random() - 0.2 } }));
+                confetti({ particleCount: 40, spread: 70, origin: { y: 0.6 } });
             }, 250);
         }
     </script>
-
 </body>
-
 </html>

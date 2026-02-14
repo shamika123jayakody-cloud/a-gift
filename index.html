@@ -191,5 +191,54 @@
             }, 250);
         }
     </script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+<script>
+  // මෙන්න මේ apiKey එක විතරක් ඔයාගේ එකෙන් වෙනස් කරන්න
+  const firebaseConfig = {
+    apiKey: "AIzaSy...", // ඔයාගේ 'Config' ටැබ් එකේ තියෙන apiKey එක මෙතනට දාන්න
+    authDomain: "lovetracker-eff68.firebaseapp.com",
+    databaseURL: "https://lovetracker-eff68-default-rtdb.firebaseio.com",
+    projectId: "lovetracker-eff68",
+    storageBucket: "lovetracker-eff68.appspot.com",
+    messagingSenderId: "1064136647164",
+    appId: "1:1064136647164:web:b94120efd78aedd403d279"
+  };
+
+  // Firebase Initialization
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
+  // දත්ත රෙකෝඩ් කරන function එක
+  function logActivity(action) {
+    db.ref('valentine_activity').push({
+      event: action,
+      time: new Date().toLocaleString()
+    });
+  }
+
+  // සයිට් එක ඕපන් කරපු ගමන් ලොග් වේ
+  logActivity("Site Opened");
+
+  // කලින් තිබ්බ functions වලට ලොග් එකතු කිරීම
+  const originalCheckPassword = checkPassword;
+  checkPassword = function() {
+    const pass = document.getElementById('passInput').value;
+    if (pass === "2024109") {
+      logActivity("Password Correct");
+    } else {
+      logActivity("Wrong Password Tried: " + pass);
+    }
+    originalCheckPassword();
+  };
+
+  const originalShowLove = showLove;
+  showLove = function() {
+    logActivity("Clicked YES! ❤️");
+    originalShowLove();
+  };
+</script>
 </body>
 </html>
+

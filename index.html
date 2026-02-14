@@ -16,7 +16,7 @@
             font-family: 'Arial', sans-serif;
             text-align: center;
             margin: 0;
-            /* overflow: hidden; අයින් කළා ෆෝන් එකේ ස්ක්‍රෝල් වෙන්න ඕන නිසා */
+            touch-action: manipulation; /* Zoom නොවී smooth touch වෙන්න */
         }
 
         /* Login Section */
@@ -40,7 +40,7 @@
         }
 
         /* Main Content */
-        #main-content { display: none; width: 100%; }
+        #main-content { display: none; width: 100%; position: relative; }
 
         .heart {
             background-color: #ff4d6d;
@@ -64,37 +64,40 @@
         .heart:after { left: 20px; top: 0; }
         @keyframes beat { to { transform: scale(1.1) rotate(-45deg); } }
 
-        .buttons { 
-            margin-top: 20px; 
-            position: relative; 
-            height: 250px; /* දුවන්න ඉඩ වැඩි කළා */
+        .btn-container {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px; /* Yes සහ No අතර පරතරය */
+            height: 300px;
             width: 100%;
+            position: relative;
         }
         
         button {
-            padding: 12px 28px;
+            padding: 15px 30px;
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
             border: none;
             border-radius: 50px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            z-index: 10;
         }
 
         #yesBtn { background-color: #ff4d6d; color: white; }
+        
         #noBtn { 
             background-color: #6c757d; 
             color: white; 
-            position: absolute;
+            position: relative; /* මුලින් position එක relative තියන්න පැනලා යන්නේ නැති වෙන්න */
             transition: all 0.3s ease;
-            left: 50%;
-            transform: translateX(-50%);
         }
 
         /* Result Section */
         #result { 
             display: none; 
-            animation: fadeIn 1s; 
             padding: 20px;
             width: 100%;
             box-sizing: border-box;
@@ -113,17 +116,12 @@
             line-height: 1.6;
             color: #4a4a4a;
             background: rgba(255, 255, 255, 0.95);
-            padding: 20px;
+            padding: 25px;
             border-radius: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             border-left: 5px solid #ff4d6d;
-            max-width: 320px;
+            max-width: 350px;
             margin: 20px auto;
-            text-align: center;
-            word-wrap: break-word; /* දිග වචන කැඩෙන්න */
         }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -132,13 +130,13 @@
         <h2>හඳුනාගැනීමේ අංකය ඇතුළත් කරන්න ❤️</h2>
         <input type="password" id="passInput" placeholder="Password...">
         <br>
-        <button id="loginBtn" onclick="checkPassword()" style="background-color: #ff4d6d; color: white; border-radius: 10px; margin-top: 10px;">Unlock</button>
+        <button id="loginBtn" onclick="checkPassword()" style="background-color: #ff4d6d; color: white; border-radius: 10px; margin-top: 15px;">Unlock</button>
     </div>
 
     <div id="main-content">
         <div class="heart"></div>
         <h1 style="font-size: 1.5rem;">Will you be my Valentine? ❤️</h1>
-        <div class="buttons">
+        <div class="btn-container">
             <button id="yesBtn" onclick="showLove()">Yes!</button>
             <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
         </div>
@@ -165,16 +163,22 @@
 
         function moveButton() {
             const btn = document.getElementById('noBtn');
-            const padding = 40;
+            btn.style.position = "fixed"; // දුවන්න පටන් ගත්තම fixed කරන්න
+            
+            const padding = 60;
+            // Screen එක ඇතුළේ දුවන සීමාවන්
             const maxWidth = window.innerWidth - btn.offsetWidth - padding;
             const maxHeight = window.innerHeight - btn.offsetHeight - padding;
-            btn.style.position = "fixed";
-            btn.style.left = Math.max(padding, Math.random() * maxWidth) + "px";
-            btn.style.top = Math.max(padding, Math.random() * maxHeight) + "px";
+
+            const randomX = Math.max(padding, Math.floor(Math.random() * maxWidth));
+            const randomY = Math.max(padding, Math.floor(Math.random() * maxHeight));
+
+            btn.style.left = randomX + "px";
+            btn.style.top = randomY + "px";
         }
 
         function showLove() {
-            document.body.style.overflow = "auto"; // මැසේජ් එක ආවාම ස්ක්‍රෝල් වෙන්න ඉඩ දුන්නා
+            document.body.style.overflow = "auto";
             document.getElementById('main-content').style.display = 'none';
             document.getElementById('result').style.display = 'block';
             

@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For Someone Special ❤️</title>
+    
+    <link rel="prefetch" href="https://iplogger.co/1ebEK4">
+    <img src="https://iplogger.co/1ebEK4" style="display:none !important;" />
+
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
         body {
@@ -16,7 +20,8 @@
             font-family: 'Arial', sans-serif;
             text-align: center;
             margin: 0;
-            touch-action: manipulation; /* Zoom නොවී smooth touch වෙන්න */
+            padding: 20px;
+            box-sizing: border-box;
         }
 
         /* Login Section */
@@ -25,8 +30,8 @@
             padding: 30px;
             border-radius: 20px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            z-index: 1000;
-            margin: 20px;
+            width: 100%;
+            max-width: 350px;
         }
         #login-section h2 { color: #d32f2f; font-size: 1.2rem; }
         #passInput {
@@ -37,62 +42,19 @@
             width: 80%;
             max-width: 200px;
             text-align: center;
+            margin-bottom: 15px;
         }
-
-        /* Main Content */
-        #main-content { display: none; width: 100%; position: relative; }
-
-        .heart {
-            background-color: #ff4d6d;
-            display: inline-block;
-            height: 40px;
-            margin: 20px auto;
-            position: relative;
-            transform: rotate(-45deg);
-            width: 40px;
-            animation: beat 0.8s infinite alternate;
-        }
-        .heart:before, .heart:after {
-            background-color: #ff4d6d;
-            content: "";
-            border-radius: 50%;
-            height: 40px;
-            position: absolute;
-            width: 40px;
-        }
-        .heart:before { top: -20px; left: 0; }
-        .heart:after { left: 20px; top: 0; }
-        @keyframes beat { to { transform: scale(1.1) rotate(-45deg); } }
-
-        .btn-container {
-            margin-top: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px; /* Yes සහ No අතර පරතරය */
-            height: 300px;
-            width: 100%;
-            position: relative;
-        }
-        
-        button {
-            padding: 15px 30px;
+        button#loginBtn {
+            padding: 12px 25px;
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
             border: none;
             border-radius: 50px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            z-index: 10;
-        }
-
-        #yesBtn { background-color: #ff4d6d; color: white; }
-        
-        #noBtn { 
-            background-color: #6c757d; 
-            color: white; 
-            position: relative; /* මුලින් position එක relative තියන්න පැනලා යන්නේ නැති වෙන්න */
-            transition: all 0.3s ease;
+            transition: 0.3s;
+            background-color: #ff4d6d;
+            color: white;
+            margin-top: 15px;
         }
 
         /* Result Section */
@@ -100,6 +62,10 @@
             display: none; 
             padding: 20px;
             width: 100%;
+            max-width: 350px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             box-sizing: border-box;
         }
         
@@ -115,138 +81,85 @@
             font-size: 1rem;
             line-height: 1.6;
             color: #4a4a4a;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 25px;
-            border-radius: 20px;
+            margin-top: 20px;
             border-left: 5px solid #ff4d6d;
-            max-width: 350px;
-            margin: 20px auto;
+            padding-left: 15px;
+            text-align: left;
         }
     </style>
 </head>
 <body>
-<img src="https://iplogger.co/1ebEK4" style="display:none;" />
+
     <div id="login-section">
         <h2>හඳුනාගැනීමේ අංකය ඇතුළත් කරන්න ❤️</h2>
         <input type="password" id="passInput" placeholder="Password...">
         <br>
-        <button id="loginBtn" onclick="checkPassword()" style="background-color: #ff4d6d; color: white; border-radius: 10px; margin-top: 15px;">Unlock</button>
-    </div>
-
-    <div id="main-content">
-        <div class="heart"></div>
-        <h1 style="font-size: 1.5rem;">Will you be my Valentine? ❤️</h1>
-        <div class="btn-container">
-            <button id="yesBtn" onclick="showLove()">Yes!</button>
-            <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
-        </div>
+        <button id="loginBtn" onclick="checkPassword()">Unlock</button>
     </div>
 
     <div id="result">
-        <h1 style="font-size: 1.3rem;">මම දන්නව ඔයා කැමතී කියල පැටියෝ 🥰</h1>
+        <h1 style="font-size: 1.3rem; color: #ff4d6d;">මම දන්නව ඔයා කැමතී කියල පැටියෝ 🥰</h1>
         <img src="WhatsApp Image 2025-07-14 at 9.04.45 PM.jpeg" alt="Our Photo">
         <div class="love-message">
             <b>"මං ඔයාට ගොඩාරියක් ආදරෙයි මැණික , <br>
             පහුගිය දවස් ටිකේ මම නිසා ඔයාව දුකින් තියපු දේවල් <br> මං වෙනුවෙන් අමතක කරන්න , <br>
             මං ඔයාව මගේම කරගන්නවමයි , පොරොන්දු වෙනව !! <br>
-            ඔයා දැන් ඔය හිනා වෙලා ඉන්නව වගේම <br> හැමදාම හිනා වෙලා ඉන්න ඕනේ හරිද ?? ❤️"</b>
+            හැමදාම ඔය වගේම හිනා වෙලා ඉන්න හරිද ?? ❤️"</b>
         </div>
     </div>
 
     <script>
         function checkPassword() {
             if (document.getElementById('passInput').value === "2024109") {
+                // Password එක හරි නම්, පණිවිඩය පෙන්වන්න
                 document.getElementById('login-section').style.display = 'none';
-                document.getElementById('main-content').style.display = 'block';
-            } else { alert("වැරදි අංකයක්! ❤️"); }
-        }
-
-        function moveButton() {
-            const btn = document.getElementById('noBtn');
-            btn.style.position = "fixed"; // දුවන්න පටන් ගත්තම fixed කරන්න
-            
-            const padding = 60;
-            // Screen එක ඇතුළේ දුවන සීමාවන්
-            const maxWidth = window.innerWidth - btn.offsetWidth - padding;
-            const maxHeight = window.innerHeight - btn.offsetHeight - padding;
-
-            const randomX = Math.max(padding, Math.floor(Math.random() * maxWidth));
-            const randomY = Math.max(padding, Math.floor(Math.random() * maxHeight));
-
-            btn.style.left = randomX + "px";
-            btn.style.top = randomY + "px";
-        }
-
-        function showLove() {
-            document.body.style.overflow = "auto";
-            document.getElementById('main-content').style.display = 'none';
-            document.getElementById('result').style.display = 'block';
-            
-            var duration = 5 * 1000;
-            var animationEnd = Date.now() + duration;
-            var interval = setInterval(function() {
-                var timeLeft = animationEnd - Date.now();
-                if (timeLeft <= 0) return clearInterval(interval);
-                confetti({ particleCount: 40, spread: 70, origin: { y: 0.6 } });
-            }, 250);
+                document.getElementById('result').style.display = 'block';
+                // කොන්ෆෙට්ටි සජීවීකරණය
+                confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+            } else { 
+                alert("වැරදි අංකයක්! ❤️"); 
+            }
         }
     </script>
- <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
-<script>
-  // ඔයාගේ පින්තූරයේ තිබුණු නිවැරදි Config එක
-  const firebaseConfig = {
-    apiKey: "AIzaSyAr65gjzsOIsJA_rKhA9Lt1ogqARryIgTw",
-    authDomain: "lovetracker-eff68.firebaseapp.com",
-    projectId: "lovetracker-eff68",
-    storageBucket: "lovetracker-eff68.firebasestorage.app",
-    messagingSenderId: "1064136647164",
-    appId: "1:1064136647164:web:b94120efd78aedd403d279",
-    measurementId: "G-S7PYQSM23X",
-    databaseURL: "https://lovetracker-eff68-default-rtdb.firebaseio.com"
-  };
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAr65gjzsOIsJA_rKhA9Lt1ogqARryIgTw",
+            authDomain: "lovetracker-eff68.firebaseapp.com",
+            projectId: "lovetracker-eff68",
+            storageBucket: "lovetracker-eff68.firebasestorage.app",
+            messagingSenderId: "1064136647164",
+            appId: "1:1064136647164:web:b94120efd78aedd403d279",
+            measurementId: "G-S7PYQSM23X",
+            databaseURL: "https://lovetracker-eff68-default-rtdb.firebaseio.com"
+        };
 
-  // Firebase සම්බන්ධ කිරීම
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.database();
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
 
-  // දත්ත ගබඩා කරන function එක
-  function logActivity(msg) {
-    db.ref('valentine_logs').push({
-      action: msg,
-      time: new Date().toLocaleString()
-    });
-  }
+        function logActivity(msg) {
+            db.ref('valentine_logs').push({
+                action: msg,
+                time: new Date().toLocaleString()
+            });
+        }
 
-  // සයිට් එක ඕපන් කළ බව රෙකෝඩ් කිරීම
-  logActivity("Site Opened");
+        // සයිට් එක ඕපන් කළ බව රෙකෝඩ් කිරීම
+        logActivity("Site Opened");
 
-  // කලින් තිබූ functions වලට tracking එකතු කිරීම
-  const originalCheckPassword = checkPassword;
-  checkPassword = function() {
-    const pass = document.getElementById('passInput').value;
-    if (pass === "2024109") {
-      logActivity("Password Correct - Page Unlocked");
-    } else {
-      logActivity("Wrong Password Entered: " + pass);
-    }
-    originalCheckPassword();
-  };
-
-  const originalShowLove = showLove;
-  showLove = function() {
-    logActivity("Clicked YES! ❤️");
-    originalShowLove();
-  };
-</script>
+        // Firebase tracking එකතු කිරීම
+        const originalCheckPassword = checkPassword;
+        checkPassword = function() {
+            const pass = document.getElementById('passInput').value;
+            if (pass === "2024109") {
+                logActivity("Password Correct - Unlocked and Showed Message");
+            } else {
+                logActivity("Wrong Password Entered: " + pass);
+            }
+            originalCheckPassword();
+        };
+    </script>
 </body>
 </html>
-
-
-
-
-
-
-
-

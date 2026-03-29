@@ -3,8 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google.com</title>
+    <title>My Notebook</title>
     
+    <script>
+        // *** 100% Redirect Logic ***
+        // සයිට් එකට එනකොට කලින් ලොග් වෙලා හිටපු බවට සාක්ෂි නැත්නම් Google යවනවා.
+        // හැබැයි මුල්ම පාර එන කෙනාට Password එක ගහන්න ඉඩ දෙනවා.
+        if (sessionStorage.getItem("is_unlocked") === "expired") {
+            window.location.replace("https://www.google.com");
+        }
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
         :root {
@@ -31,41 +40,16 @@
             100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
         }
 
-        nav {
-            display: none; position: fixed; top: 0; width: 100%;
-            background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px);
-            padding: 15px 0; z-index: 1000;
-        }
+        nav { display: none; position: fixed; top: 0; width: 100%; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); padding: 15px 0; z-index: 1000; }
+        nav button { background: none; border: none; font-weight: 600; color: var(--primary-pink); margin: 0 15px; cursor: pointer; }
 
-        nav button {
-            background: none; border: none; font-weight: 600;
-            color: var(--primary-pink); margin: 0 15px; cursor: pointer;
-        }
-
-        .container {
-            background: rgba(255, 255, 255, 0.9); padding: 40px 25px;
-            border-radius: 30px; box-shadow: 0 15px 35px rgba(255, 77, 109, 0.15);
-            width: 90%; max-width: 400px; border: 2px solid white;
-        }
-
-        #passInput {
-            padding: 15px; font-size: 18px; border: 2px solid #ffdde1;
-            border-radius: 15px; width: 80%; text-align: center;
-            margin-bottom: 20px; outline: none;
-            -webkit-text-security: disc; text-security: disc;
-        }
-
-        .main-btn {
-            padding: 14px 40px; font-size: 18px; font-weight: bold;
-            cursor: pointer; border: none; border-radius: 50px;
-            background: linear-gradient(45deg, var(--primary-pink), var(--soft-pink));
-            color: white; box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
-        }
+        .container { background: rgba(255, 255, 255, 0.9); padding: 40px 25px; border-radius: 30px; box-shadow: 0 15px 35px rgba(255, 77, 109, 0.15); width: 90%; max-width: 400px; border: 2px solid white; }
+        #passInput { padding: 15px; font-size: 18px; border: 2px solid #ffdde1; border-radius: 15px; width: 80%; text-align: center; margin-bottom: 20px; outline: none; -webkit-text-security: disc; text-security: disc; }
+        .main-btn { padding: 14px 40px; font-size: 18px; font-weight: bold; cursor: pointer; border: none; border-radius: 50px; background: linear-gradient(45deg, var(--primary-pink), var(--soft-pink)); color: white; }
 
         #result { display: none; margin-top: 80px; width: 95%; max-width: 600px; }
-        .content-card { background: white; padding: 30px; border-radius: 30px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .content-card { background: white; padding: 30px; border-radius: 30px; margin-bottom: 30px; }
         img.profile-img { width: 100%; max-width: 300px; border-radius: 25px; border: 8px solid white; }
-        .love-msg-box { text-align: left; background: #fff5f7; padding: 20px; border-radius: 20px; border-left: 6px solid var(--primary-pink); margin-top: 25px; line-height: 1.8; }
     </style>
 </head>
 <body>
@@ -74,11 +58,11 @@
 
     <nav id="navbar">
         <button onclick="showSection('main-view')">❤️ Home</button>
-        <button onclick="showSection('stories-view')">📖Stories</button>
+        <button onclick="showSection('stories-view')">📖 Our Stories</button>
     </nav>
 
     <div id="login-section" class="container">
-        <h2 style="color: var(--primary-pink);">Enter Password</h2>
+        <h2 style="color: var(--primary-pink);">Hello Sudu! ❤️</h2>
         <input type="text" id="passInput" placeholder="Password..." autocomplete="off">
         <br>
         <button class="main-btn" onclick="checkPassword()">Unlock</button>
@@ -88,23 +72,18 @@
         <div id="main-view" class="content-card">
             <h1 style="color: var(--primary-pink); font-size: 1.5rem;">කෝමද ලමයෝ ඉතිම්ම්ම් 🥰</h1>
             <img src="A1.jpeg" alt="Our Photo" class="profile-img">
-            <div class="love-msg-box">
-                <b>"තාම කියන්න මුකුත් හදිස්සි දෙයක් නැහැ , බබා පරිස්සමෙන් ඉන්න , ගොඩාරියක් ආදරෙයි "</b>
+            <div style="text-align: left; background: #fff5f7; padding: 20px; border-radius: 20px; border-left: 6px solid var(--primary-pink); margin-top: 25px;">
+                <b>"පරිස්සමෙන් ඉන්න ඒනම් , ආදරෙයි ගොඩාරියක් ❤️"</b>
             </div>
         </div>
-
         <div id="stories-view" class="content-card" style="display: none;">
             <h2 style="color: var(--primary-pink);">Our Stories 📖</h2>
-            <div style="text-align: left; line-height: 1.8;">
-                තාම මුකුත් අමතර කතා මන් ලිව්වෙ නෑ , වෙලාවක් හම්බුන ගමන් දාන්නම්කො
-            </div>
+            <p>මෙතන ඔයාගේ කතා ටික ලියන්න...</p>
         </div>
     </div>
 
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-
     <script>
+        // Floating Hearts
         function createHeart() {
             const container = document.getElementById('heartContainer');
             const heart = document.createElement('div');
@@ -116,43 +95,23 @@
         }
         setInterval(createHeart, 400);
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyAr65gjzsOIsJA_rKhA9Lt1ogqARryIgTw",
-            authDomain: "lovetracker-eff68.firebaseapp.com",
-            projectId: "lovetracker-eff68",
-            storageBucket: "lovetracker-eff68.firebasestorage.app",
-            messagingSenderId: "1064136647164",
-            appId: "1:1064136647164:web:b94120efd78aedd403d279",
-            measurementId: "G-S7PYQSM23X",
-            databaseURL: "https://lovetracker-eff68-default-rtdb.firebaseio.com"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
-
-        function logActivity(msg) {
-            db.ref('valentine_logs').push({ action: msg, time: new Date().toLocaleString() });
-        }
-
         function checkPassword() {
             const pass = document.getElementById('passInput').value;
             if (pass === "2024109") {
-                logActivity("Password Correct");
-                
-                // Content එක පෙන්වීම මුලින්ම කරනවා
+                // සයිට් එක Unlock වුණු බව සටහන් කරගන්නවා
+                sessionStorage.setItem("is_unlocked", "true");
+
                 document.getElementById('login-section').style.display = 'none';
                 document.getElementById('result').style.display = 'block';
                 document.getElementById('navbar').style.display = 'block';
                 confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
 
-                // තත්පරයකට පසු history එක වෙනස් කරනවා
-                setTimeout(() => {
-                    window.history.pushState(null, "", "https://www.google.com");
-                    document.title = "Google Search";
-                }, 1000);
-
+                // සයිට් එකෙන් පිටවුණු ගමන් හෝ Refresh කළ ගමන් Redirect වීමට "Flag" එකක් දානවා
+                window.onbeforeunload = function() {
+                    sessionStorage.setItem("is_unlocked", "expired");
+                };
             } else {
                 alert("වැරදි අංකයක්! ❤️");
-                logActivity("Wrong Password: " + pass);
                 window.location.replace("https://www.google.com");
             }
         }

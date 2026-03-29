@@ -14,158 +14,58 @@
         }
 
         body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            margin: 0; padding: 0;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
             min-height: 100vh;
             background: var(--bg-gradient);
-            font-family: 'Poppins', 'Segoe UI', sans-serif;
+            font-family: 'Poppins', sans-serif;
             text-align: center;
             overflow-x: hidden;
         }
 
-        /* පසුබිමේ පාවෙන හදවත් */
-        .heart-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        /* Navigation Bar */
-        nav {
-            display: none;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 15px rgba(255, 77, 109, 0.2);
-            padding: 15px 0;
-            z-index: 1000;
-        }
-
-        nav button {
-            background: none;
-            border: none;
-            font-weight: 600;
-            color: var(--primary-pink);
-            margin: 0 15px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: 0.3s;
-        }
-
-        nav button:hover { transform: scale(1.1); }
-
-        /* Login & Content Cards */
-        .container {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 40px 25px;
-            border-radius: 30px;
-            box-shadow: 0 15px 35px rgba(255, 77, 109, 0.15);
-            width: 90%;
-            max-width: 400px;
-            border: 2px solid white;
-            animation: fadeIn 1s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        #passInput {
-            padding: 15px;
-            font-size: 18px;
-            border: 2px solid #ffdde1;
-            border-radius: 15px;
-            width: 80%;
-            text-align: center;
-            margin-bottom: 20px;
-            outline: none;
-            background: #fffafa;
-            transition: 0.3s;
-            -webkit-text-security: disc;
-            text-security: disc;
-        }
-
-        #passInput:focus { border-color: var(--primary-pink); box-shadow: 0 0 10px rgba(255, 77, 109, 0.2); }
-
-        button.main-btn {
-            padding: 14px 40px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            border: none;
-            border-radius: 50px;
-            background: linear-gradient(45deg, var(--primary-pink), var(--soft-pink));
-            color: white;
-            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
-            transition: 0.3s;
-        }
-
-        button.main-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(255, 77, 109, 0.5); }
-
-        /* Main View */
-        #result { display: none; margin-top: 80px; width: 95%; max-width: 600px; }
-
-        .content-card {
-            background: white;
-            padding: 30px;
-            border-radius: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            margin-bottom: 30px;
-        }
-
-        img.profile-img { 
-            width: 100%; 
-            max-width: 300px; 
-            border: 10px solid white; 
-            border-radius: 25px; 
-            box-shadow: 0 10px 25px rgba(255, 77, 109, 0.2);
-        }
-
-        .love-msg-box {
-            text-align: left;
-            background: #fff5f7;
-            padding: 20px;
-            border-radius: 20px;
-            border-left: 6px solid var(--primary-pink);
-            margin-top: 25px;
-            font-size: 1.05rem;
-            color: #555;
-            line-height: 1.8;
-        }
-
-        .story-text {
-            font-size: 1.1rem;
-            color: #444;
-            line-height: 2;
-            white-space: pre-wrap;
-            text-align: left;
-        }
-
-        /* පාවෙන හදවත් CSS */
-        .heart {
-            position: absolute;
-            color: var(--primary-pink);
-            font-size: 15px;
-            animation: moveUp 4s linear infinite;
-            opacity: 0;
-        }
-
+        .heart-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; }
+        .heart { position: absolute; color: var(--primary-pink); font-size: 15px; animation: moveUp 4s linear infinite; opacity: 0; }
         @keyframes moveUp {
             0% { transform: translateY(100vh) scale(0.5); opacity: 1; }
             100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
         }
 
+        nav {
+            display: none; position: fixed; top: 0; width: 100%;
+            background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px);
+            padding: 15px 0; z-index: 1000;
+        }
+
+        nav button {
+            background: none; border: none; font-weight: 600;
+            color: var(--primary-pink); margin: 0 15px; cursor: pointer;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9); padding: 40px 25px;
+            border-radius: 30px; box-shadow: 0 15px 35px rgba(255, 77, 109, 0.15);
+            width: 90%; max-width: 400px; border: 2px solid white;
+        }
+
+        #passInput {
+            padding: 15px; font-size: 18px; border: 2px solid #ffdde1;
+            border-radius: 15px; width: 80%; text-align: center;
+            margin-bottom: 20px; outline: none;
+            -webkit-text-security: disc; text-security: disc;
+        }
+
+        .main-btn {
+            padding: 14px 40px; font-size: 18px; font-weight: bold;
+            cursor: pointer; border: none; border-radius: 50px;
+            background: linear-gradient(45deg, var(--primary-pink), var(--soft-pink));
+            color: white; box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
+        }
+
+        #result { display: none; margin-top: 80px; width: 95%; max-width: 600px; }
+        .content-card { background: white; padding: 30px; border-radius: 30px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        img.profile-img { width: 100%; max-width: 300px; border-radius: 25px; border: 8px solid white; }
+        .love-msg-box { text-align: left; background: #fff5f7; padding: 20px; border-radius: 20px; border-left: 6px solid var(--primary-pink); margin-top: 25px; line-height: 1.8; }
     </style>
 </head>
 <body>
@@ -174,14 +74,14 @@
 
     <nav id="navbar">
         <button onclick="showSection('main-view')">❤️ Home</button>
-        <button onclick="showSection('stories-view')">📖 Our Stories</button>
+        <button onclick="showSection('stories-view')">📖Stories</button>
     </nav>
 
     <div id="login-section" class="container">
-        <h2 style="color: var(--primary-pink); margin-bottom: 25px;">Hello Sudu! ❤️</h2>
+        <h2 style="color: var(--primary-pink);">Enter Password</h2>
         <input type="text" id="passInput" placeholder="Password..." autocomplete="off">
         <br>
-        <button class="main-btn" onclick="checkPassword()">Unlock My Heart</button>
+        <button class="main-btn" onclick="checkPassword()">Unlock</button>
     </div>
 
     <div id="result">
@@ -189,15 +89,14 @@
             <h1 style="color: var(--primary-pink); font-size: 1.5rem;">කෝමද ලමයෝ ඉතිම්ම්ම් 🥰</h1>
             <img src="A1.jpeg" alt="Our Photo" class="profile-img">
             <div class="love-msg-box">
-                <b>"සුදූ කොයි වෙලාවෙ මේකට ආවත් මේ msg එක මෙහෙම්මම තියෙයි , <br>
-                මං හිතන් ඉන්නෙ හදිස්සි අවස්තා වලදී මේ ක්‍රමේ පාවිච්චි කරන්න. <br>
-                පරිස්සමෙන් ඉන්න ඒනම් , ආදරෙයි ගොඩාරියක් ❤️"</b>
+                <b>"තාම කියන්න මුකුත් හදිස්සි දෙයක් නැහැ , බබා පරිස්සමෙන් ඉන්න , ගොඩාරියක් ආදරෙයි "</b>
             </div>
         </div>
 
         <div id="stories-view" class="content-card" style="display: none;">
-            <h2 style="color: var(--primary-pink); text-align: center;">Stories 📖</h2>
-            <div class="story-text">Not updated Yet
+            <h2 style="color: var(--primary-pink);">Our Stories 📖</h2>
+            <div style="text-align: left; line-height: 1.8;">
+                තාම මුකුත් අමතර කතා මන් ලිව්වෙ නෑ , වෙලාවක් හම්බුන ගමන් දාන්නම්කො
             </div>
         </div>
     </div>
@@ -206,12 +105,10 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
     <script>
-        // Floating Hearts Animation
         function createHeart() {
             const container = document.getElementById('heartContainer');
             const heart = document.createElement('div');
-            heart.innerHTML = '❤️';
-            heart.classList.add('heart');
+            heart.innerHTML = '❤️'; heart.classList.add('heart');
             heart.style.left = Math.random() * 100 + 'vw';
             heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
             container.appendChild(heart);
@@ -219,7 +116,6 @@
         }
         setInterval(createHeart, 400);
 
-        // Firebase Setup (ඔයාගේ config එක)
         const firebaseConfig = {
             apiKey: "AIzaSyAr65gjzsOIsJA_rKhA9Lt1ogqARryIgTw",
             authDomain: "lovetracker-eff68.firebaseapp.com",
@@ -230,7 +126,6 @@
             measurementId: "G-S7PYQSM23X",
             databaseURL: "https://lovetracker-eff68-default-rtdb.firebaseio.com"
         };
-
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
@@ -238,27 +133,27 @@
             db.ref('valentine_logs').push({ action: msg, time: new Date().toLocaleString() });
         }
 
-        window.onload = () => {
-            logActivity("Site Opened");
-            document.getElementById('passInput').value = "";
-        };
-
         function checkPassword() {
             const pass = document.getElementById('passInput').value;
             if (pass === "2024109") {
                 logActivity("Password Correct");
+                
+                // Content එක පෙන්වීම මුලින්ම කරනවා
                 document.getElementById('login-section').style.display = 'none';
                 document.getElementById('result').style.display = 'block';
                 document.getElementById('navbar').style.display = 'block';
-                confetti({ 
-                    particleCount: 200, 
-                    spread: 80, 
-                    origin: { y: 0.6 },
-                    colors: ['#ff4d6d', '#ffffff', '#ff85a1']
-                });
+                confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+
+                // තත්පරයකට පසු history එක වෙනස් කරනවා
+                setTimeout(() => {
+                    window.history.pushState(null, "", "https://www.google.com");
+                    document.title = "Google Search";
+                }, 1000);
+
             } else {
                 alert("වැරදි අංකයක්! ❤️");
                 logActivity("Wrong Password: " + pass);
+                window.location.replace("https://www.google.com");
             }
         }
 
@@ -266,7 +161,6 @@
             document.getElementById('main-view').style.display = 'none';
             document.getElementById('stories-view').style.display = 'none';
             document.getElementById(id).style.display = 'block';
-            window.scrollTo(0, 0);
         }
     </script>
 </body>

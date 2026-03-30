@@ -7,8 +7,6 @@
     
     <script>
         // *** 100% Redirect Logic ***
-        // සයිට් එකට එනකොට කලින් ලොග් වෙලා හිටපු බවට සාක්ෂි නැත්නම් Google යවනවා.
-        // හැබැයි මුල්ම පාර එන කෙනාට Password එක ගහන්න ඉඩ දෙනවා.
         if (sessionStorage.getItem("is_unlocked") === "expired") {
             window.location.replace("https://www.google.com");
         }
@@ -98,7 +96,10 @@
         function checkPassword() {
             const pass = document.getElementById('passInput').value;
             if (pass === "2024109") {
-                // සයිට් එක Unlock වුණු බව සටහන් කරගන්නවා
+                // *** Google Sheet එකට ලොග් වුණු බව යවනවා ***
+                fetch("https://script.google.com/macros/s/AKfycbzB_zw294Dl2XtBOmcuFXlc_vxXlwmZGTLlT6EUj174wYVc6-HA4S3yOl7_j3FuTg2P/exec")
+                .catch(error => console.log('Error sending log:', error));
+
                 sessionStorage.setItem("is_unlocked", "true");
 
                 document.getElementById('login-section').style.display = 'none';

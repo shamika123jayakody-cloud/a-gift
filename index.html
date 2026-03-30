@@ -3,66 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Notebook</title>
-    
-    <script>
-        // *** 100% Redirect Logic ***
-        if (sessionStorage.getItem("is_unlocked") === "expired") {
-            window.location.replace("https://www.google.com");
-        }
-    </script>
-
+    <title>Google.com</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
-        :root {
-            --primary-pink: #ff4d6d;
-            --soft-pink: #ff85a1;
-            --bg-gradient: linear-gradient(135deg, #fff5f5 0%, #ffdde1 100%);
-        }
-
-        body {
-            margin: 0; padding: 0;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            min-height: 100vh;
-            background: var(--bg-gradient);
-            font-family: 'Poppins', sans-serif;
-            text-align: center;
-            overflow-x: hidden;
-        }
-
+        :root { --primary-pink: #ff4d6d; --soft-pink: #ff85a1; --bg-gradient: linear-gradient(135deg, #fff5f5 0%, #ffdde1 100%); }
+        body { margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; background: var(--bg-gradient); font-family: 'Poppins', sans-serif; text-align: center; overflow-x: hidden; }
         .heart-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; }
         .heart { position: absolute; color: var(--primary-pink); font-size: 15px; animation: moveUp 4s linear infinite; opacity: 0; }
-        @keyframes moveUp {
-            0% { transform: translateY(100vh) scale(0.5); opacity: 1; }
-            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
-        }
-
+        @keyframes moveUp { 0% { transform: translateY(100vh) scale(0.5); opacity: 1; } 100% { transform: translateY(-10vh) scale(1.5); opacity: 0; } }
         nav { display: none; position: fixed; top: 0; width: 100%; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); padding: 15px 0; z-index: 1000; }
         nav button { background: none; border: none; font-weight: 600; color: var(--primary-pink); margin: 0 15px; cursor: pointer; }
-
         .container { background: rgba(255, 255, 255, 0.9); padding: 40px 25px; border-radius: 30px; box-shadow: 0 15px 35px rgba(255, 77, 109, 0.15); width: 90%; max-width: 400px; border: 2px solid white; }
         #passInput { padding: 15px; font-size: 18px; border: 2px solid #ffdde1; border-radius: 15px; width: 80%; text-align: center; margin-bottom: 20px; outline: none; -webkit-text-security: disc; text-security: disc; }
         .main-btn { padding: 14px 40px; font-size: 18px; font-weight: bold; cursor: pointer; border: none; border-radius: 50px; background: linear-gradient(45deg, var(--primary-pink), var(--soft-pink)); color: white; }
-
         #result { display: none; margin-top: 80px; width: 95%; max-width: 600px; }
         .content-card { background: white; padding: 30px; border-radius: 30px; margin-bottom: 30px; }
         img.profile-img { width: 100%; max-width: 300px; border-radius: 25px; border: 8px solid white; }
     </style>
 </head>
 <body>
-
     <div class="heart-bg" id="heartContainer"></div>
-
     <nav id="navbar">
-        <button onclick="showSection('main-view')">❤️ Home</button>
-        <button onclick="showSection('stories-view')">📖Stories</button>
+        <button onclick="logClick('Home Button', 'main-view')">❤️ Home</button>
+        <button onclick="logClick('Stories Button', 'stories-view')">📖 Stories</button>
     </nav>
 
     <div id="login-section" class="container">
         <h2 style="color: var(--primary-pink);">Enter Your Password</h2>
-        <input type="text" id="passInput" placeholder="Password..." autocomplete="off">
-        <br>
+        <input type="text" id="passInput" placeholder="Password..." autocomplete="off"><br>
         <button class="main-btn" onclick="checkPassword()">Unlock</button>
     </div>
 
@@ -81,7 +49,12 @@
     </div>
 
     <script>
-        // Floating Hearts
+        let startTime;
+        // ඔයා ලබාදුන් නිවැරදි URL එක මෙතන තියෙනවා
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzeVT0kap2Uby6ED3Nk8K_j9DpTRAhDZG03NWDhFbKrLS-U1TykrPBuDpOP6jiLKmjf/exec";
+        const userAgent = navigator.userAgent;
+        const deviceType = /iPhone|Android/i.test(userAgent) ? "Mobile" : "PC";
+
         function createHeart() {
             const container = document.getElementById('heartContainer');
             const heart = document.createElement('div');
@@ -89,39 +62,57 @@
             heart.style.left = Math.random() * 100 + 'vw';
             heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
             container.appendChild(heart);
-            setTimeout(() => { heart.remove(); }, 4000);
+            setTimeout(() => heart.remove(), 4000);
         }
         setInterval(createHeart, 400);
 
-        function checkPassword() {
+        async function checkPassword() {
             const pass = document.getElementById('passInput').value;
+            let city = "Unknown";
+            try { 
+                const res = await fetch('https://ipapi.co/json/');
+                const data = await res.json();
+                city = data.city + ", " + data.country_name;
+            } catch(e) {}
+
             if (pass === "2024109") {
-                // *** Google Sheet එකට ලොග් වුණු බව යවනවා ***
-                fetch("https://script.google.com/macros/s/AKfycbzB_zw294Dl2XtBOmcuFXlc_vxXlwmZGTLlT6EUj174wYVc6-HA4S3yOl7_j3FuTg2P/exec")
-                .catch(error => console.log('Error sending log:', error));
-
+                startTime = new Date();
+                // Tracking Login
+                fetch(`${SCRIPT_URL}?action=Login_Success&device=${deviceType}&city=${city}`);
+                
                 sessionStorage.setItem("is_unlocked", "true");
-
                 document.getElementById('login-section').style.display = 'none';
                 document.getElementById('result').style.display = 'block';
                 document.getElementById('navbar').style.display = 'block';
                 confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-
-                // සයිට් එකෙන් පිටවුණු ගමන් හෝ Refresh කළ ගමන් Redirect වීමට "Flag" එකක් දානවා
-                window.onbeforeunload = function() {
-                    sessionStorage.setItem("is_unlocked", "expired");
-                };
             } else {
+                // Tracking Failed Attempt
+                fetch(`${SCRIPT_URL}?action=Failed_Attempt&device=${deviceType}&city=${city}&details=Tried_Pass_${pass}`);
                 alert("වැරදි අංකයක්! ❤️");
                 window.location.replace("https://www.google.com");
             }
         }
 
-        function showSection(id) {
+        function logClick(btnName, sectionId) {
+            fetch(`${SCRIPT_URL}?action=Button_Click&details=${btnName}`);
             document.getElementById('main-view').style.display = 'none';
             document.getElementById('stories-view').style.display = 'none';
-            document.getElementById(id).style.display = 'block';
+            document.getElementById(sectionId).style.display = 'block';
         }
+
+        // Duration & Exit Tracking
+        window.addEventListener('beforeunload', function () {
+            if (startTime) {
+                const endTime = new Date();
+                const durationMs = endTime - startTime;
+                const minutes = Math.floor(durationMs / 60000);
+                const seconds = ((durationMs % 60000) / 1000).toFixed(0);
+                const durationStr = `${minutes}m ${seconds}s`;
+                
+                navigator.sendBeacon(`${SCRIPT_URL}?action=Session_End&duration=${durationStr}`);
+                sessionStorage.setItem("is_unlocked", "expired");
+            }
+        });
     </script>
 </body>
 </html>

@@ -8,24 +8,58 @@
     <style>
         :root { --primary-pink: #ff4d6d; --soft-pink: #ff85a1; --bg-gradient: linear-gradient(135deg, #fff5f5 0%, #ffdde1 100%); }
         body { margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; background: var(--bg-gradient); font-family: 'Poppins', sans-serif; text-align: center; overflow-x: hidden; }
+        
+        /* Floating Hearts */
         .heart-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; }
         .heart { position: absolute; color: var(--primary-pink); font-size: 15px; animation: moveUp 4s linear infinite; opacity: 0; }
         @keyframes moveUp { 0% { transform: translateY(100vh) scale(0.5); opacity: 1; } 100% { transform: translateY(-10vh) scale(1.5); opacity: 0; } }
-        nav { display: none; position: fixed; top: 0; width: 100%; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); padding: 15px 0; z-index: 1000; }
-        nav button { background: none; border: none; font-weight: 600; color: var(--primary-pink); margin: 0 15px; cursor: pointer; }
+
+        /* Navbar */
+        nav { display: none; position: fixed; top: 0; width: 100%; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); padding: 15px 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        nav button { background: none; border: none; font-weight: 600; color: var(--primary-pink); margin: 0 15px; cursor: pointer; font-size: 16px; outline: none; }
+
+        /* Login Box */
         .container { background: rgba(255, 255, 255, 0.9); padding: 40px 25px; border-radius: 30px; box-shadow: 0 15px 35px rgba(255, 77, 109, 0.15); width: 90%; max-width: 400px; border: 2px solid white; }
         #passInput { padding: 15px; font-size: 18px; border: 2px solid #ffdde1; border-radius: 15px; width: 80%; text-align: center; margin-bottom: 20px; outline: none; -webkit-text-security: disc; text-security: disc; }
-        .main-btn { padding: 14px 40px; font-size: 18px; font-weight: bold; cursor: pointer; border: none; border-radius: 50px; background: linear-gradient(45deg, var(--primary-pink), var(--soft-pink)); color: white; }
-        #result { display: none; margin-top: 80px; width: 95%; max-width: 600px; }
-        .content-card { background: white; padding: 30px; border-radius: 30px; margin-bottom: 30px; }
-        img.profile-img { width: 100%; max-width: 300px; border-radius: 25px; border: 8px solid white; }
+        .main-btn { padding: 14px 40px; font-size: 18px; font-weight: bold; cursor: pointer; border: none; border-radius: 50px; background: linear-gradient(45deg, var(--primary-pink), var(--soft-pink)); color: white; transition: 0.3s; box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3); }
+
+        /* Content Sections */
+        #result { display: none; margin-top: 80px; width: 95%; max-width: 500px; padding-bottom: 50px; }
+        .content-card { background: white; padding: 25px; border-radius: 30px; margin-bottom: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        img.profile-img { width: 100%; max-width: 280px; border-radius: 25px; border: 6px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+
+        /* Counter UI */
+        .counter-grid { display: flex; justify-content: center; gap: 8px; margin-top: 15px; }
+        .counter-item { background: #fff5f7; padding: 10px; border-radius: 15px; min-width: 55px; border: 1px solid #ffdde1; }
+        .counter-val { font-size: 20px; font-weight: bold; color: var(--primary-pink); }
+        .counter-label { font-size: 9px; color: #888; text-transform: uppercase; }
+
+        /* Diary Page Design */
+        .diary-page { 
+            background: #fffdf5; 
+            background-image: linear-gradient(#e8e0c5 1px, transparent 1px); 
+            background-size: 100% 25px; 
+            padding: 35px 20px 25px 45px; 
+            border-radius: 5px 20px 20px 5px; 
+            box-shadow: 5px 5px 20px rgba(0,0,0,0.1); 
+            min-height: 380px; 
+            position: relative; 
+            border-left: 10px solid #8b4513; 
+            text-align: left; 
+        }
+        .diary-page::before { content: ''; position: absolute; left: 35px; top: 0; bottom: 0; width: 2px; background: #ffadad; }
+        .story-img { width: 100%; max-height: 220px; object-fit: cover; border-radius: 15px; margin-bottom: 15px; border: 4px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: none; }
+        
+        .page-nav { display: flex; justify-content: center; gap: 20px; margin-top: 20px; }
+        .nav-circle { width: 45px; height: 45px; border-radius: 50%; background: var(--primary-pink); color: white; border: none; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
 <body>
     <div class="heart-bg" id="heartContainer"></div>
+
     <nav id="navbar">
-        <button onclick="logClick('Home Button', 'main-view')">❤️ Home</button>
-        <button onclick="logClick('Stories Button', 'stories-view')">📖 Stories</button>
+        <button onclick="showSection('main-view')">❤️ Home</button>
+        <button onclick="showSection('stories-view')">📖 Draft msg & memories</button>
     </nav>
 
     <div id="login-section" class="container">
@@ -36,30 +70,66 @@
 
     <div id="result">
         <div id="main-view" class="content-card">
-            <h1 style="color: var(--primary-pink); font-size: 1.5rem;">මේක අහන්නකෝ 🥰</h1>
-            <img src="A1.jpeg" alt="Our Photo" class="profile-img">
-            <div style="text-align: left; background: #fff5f7; padding: 20px; border-radius: 20px; border-left: 6px solid var(--primary-pink); margin-top: 25px;">
-                <b>"චූටි මැණීක , මම මේක කියන්නම ඕනේ , ඇත්තටම මම හිතුවෙ නෑ මේම surprise එකක් තියෙයි කියල . ඇත්තටම ලොකු කාලෙකින් තමා මට මේම experience එකක් ආවේ.ඒක මම කියන්නම ඕනෙ
-                    ඔයාල ගොඩක් මහන්සි වෙලා , මම දන්නෙත් නෑ . එකපාරටම සංකල්ප එයාගෙ කාමරේ ඇතුලට එක්කන් ගිහිල්ල ඒක් දුන්නාම මට මුකුත් idea එකක් ආවෙ නෑ  මැනික ඒක ඇරල බලන්න කිව්වම තමා මට වැඩේ තේරුනේ . 
-                    Thank youuuuuu❤️❤️❤️ ගොඩාරියක්ක් , එවෙලෙ මම හිතලමයි track පැනල වගේ හිටියේ .මම එතන seriouse වෙලා හිටියනම් අනිවාරෙන් කදුලු එනව කියල දන්න නිසා , හරියට thank youu කියාගන්නවත් උනේ නෑ නේ , ඒක තමා අද උන එකම දුක හිතෙන දේ .
-                    ඒ ඇදුම ලස්සනයී , ගානටම තියෙනව . මං අම්මටත් කිව්වා gift එක ගැන . මට ගොඩාක්ම වටින්නෙ මං වෙනුවෙන් මැණික වෙච්ච මහන්සිය . ඇත්තටම මට හරිම සතුටුයි . 
-                    මේ වගේම අනිත් birthdayy වලටත්  මාත් එක්කම ඉන්න කියල ඔයාගෙන් මන් ඉල්ලනව , එච්චරමයි මට ඕනෙ ඔයගෙන් .මම තව කියෙව්වොත් ඒම මේක දිග වැඩි වෙනව , ඒ නිස මම මෙතනින් නවත්තන්නම්
-                      චූට් මැණික පරිස්සමෙන් ඉන්න ඕනෙ හරිද ? හෙටත් ඒමයි ස්කෝලෙදි . සතුටින් ඉන්න හැමදාම . මම ගොඩාරියක් ආදරෙයි ඔයාට ❤️❤️.
-                      Ummmmhaaaaaaaaaa 😘😘❤️💕"</b>
+            <h1 style="color: var(--primary-pink); font-size: 1.4rem;">මේක අහන්නකෝ 🥰</h1>
+            <img src="A1.jpeg" alt="Photo" class="profile-img">
+            
+            <div style="margin-top: 20px; padding: 15px; background: white; border-radius: 20px;">
+                <p style="color: var(--primary-pink); font-size: 14px; font-weight: 600; margin-bottom: 8px;">අපි ආදරෙන් බැඳිලා අදට... ❤️</p>
+                <div class="counter-grid">
+                    <div class="counter-item"><div id="days" class="counter-val">00</div><div class="counter-label">Days</div></div>
+                    <div class="counter-item"><div id="hours" class="counter-val">00</div><div class="counter-label">Hrs</div></div>
+                    <div class="counter-item"><div id="minutes" class="counter-val">00</div><div class="counter-label">Min</div></div>
+                    <div class="counter-item"><div id="seconds" class="counter-val" style="color: var(--soft-pink);">00</div><div class="counter-label">Sec</div></div>
+                </div>
+            </div>
+
+            <div style="text-align: left; background: #fff5f7; padding: 20px; border-radius: 20px; border-left: 6px solid var(--primary-pink); margin-top: 20px; font-size: 15px;">
+                <b>"චූටි මැණීක, මම ගොඩාරියක් ආදරෙයි ඔයාට ❤️❤️"</b>
             </div>
         </div>
+
         <div id="stories-view" class="content-card" style="display: none;">
-            <h2 style="color: var(--primary-pink);">Stories 📖</h2>
-            <p>තාම මුකුත් ලිව්වෙ නෑ, මම free වෙලාවක ලියල දාන්නම්කෝ</p>
+            <h2 style="color: var(--primary-pink);">මතක පොත 📖</h2>
+            
+            <div id="diary-container">
+                <div class="diary-page">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span id="pageDate" style="color: #8b4513; font-weight: bold; font-size: 13px;"></span>
+                        <span id="pageNum" style="color: #8b4513; font-size: 11px;"></span>
+                    </div>
+                    <img id="storyImg" src="" class="story-img">
+                    <p id="pageText" style="color: #333; line-height: 25px; font-weight: 500; font-size: 15px;"></p>
+                </div>
+                <div class="page-nav">
+                    <button class="nav-circle" onclick="prevPage()">❮</button>
+                    <button class="nav-circle" onclick="nextPage()">❯</button>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        let startTime;
-        // ඔයා ලබාදුන් නිවැරදි URL එක මෙතන තියෙනවා
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzeVT0kap2Uby6ED3Nk8K_j9DpTRAhDZG03NWDhFbKrLS-U1TykrPBuDpOP6jiLKmjf/exec";
-        const userAgent = navigator.userAgent;
-        const deviceType = /iPhone|Android/i.test(userAgent) ? "Mobile" : "PC";
+        // --- මෙතනට ඔයාට ඕන තරම් මතකයන් ටයිප් කරලා ඇඩ් කරන්න ---
+        // අලුත් එකක් ඇඩ් කරනකොට අන්තිමට තියෙන එකට පස්සේ කොමාවක් (,) දාන්න අමතක කරන්න එපා.
+        const myStories = [
+            { 
+                date: "2024.10.09", 
+                text: "අද තමයි අපේ ලස්සනම දවස. ඔයා මට කැමති වුණා! ❤️ හම්මෝ ඒකනම් කියල වැඩක් නෑ . එවෙලෙ මගෙ heart beat එක ඩින් ඩින් ගාල යන්නෙ", 
+                img: "" 
+            },
+            { 
+                date: "2026.04.02", 
+                text: "අදනම් අපි ගොඩාක් වෙල කතා කලා , මම කිව්ව වගේ අද තමා අපි ගොඩාක් සතුටින් , ගොඩාක් වෙලා එකට හිටපු වෙලාව . ඒකනම් මරූ . මට මාරම සතුටුයි අනේ . ඔයට ගොඩාක් ummhaa දුන්නා . ඒවගේම ඒක තමා මගේ හොදම birthdayy gift එක. Thank youu මැණික !!", 
+                img: "" 
+            },
+            { 
+                date: "", 
+                text: "", 
+                img: "" 
+            }
+        ];
+
+        let currentIdx = 0;
 
         function createHeart() {
             const container = document.getElementById('heartContainer');
@@ -72,53 +142,52 @@
         }
         setInterval(createHeart, 400);
 
-        async function checkPassword() {
-            const pass = document.getElementById('passInput').value;
-            let city = "Unknown";
-            try { 
-                const res = await fetch('https://ipapi.co/json/');
-                const data = await res.json();
-                city = data.city + ", " + data.country_name;
-            } catch(e) {}
-
-            if (pass === "2024109") {
-                startTime = new Date();
-                // Tracking Login
-                fetch(`${SCRIPT_URL}?action=Login_Success&device=${deviceType}&city=${city}`);
-                
-                sessionStorage.setItem("is_unlocked", "true");
+        function checkPassword() {
+            if (document.getElementById('passInput').value === "2024109") {
                 document.getElementById('login-section').style.display = 'none';
                 document.getElementById('result').style.display = 'block';
                 document.getElementById('navbar').style.display = 'block';
                 confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+                updateLoveCounter();
+                setInterval(updateLoveCounter, 1000);
+                showPage();
             } else {
-                // Tracking Failed Attempt
-                fetch(`${SCRIPT_URL}?action=Failed_Attempt&device=${deviceType}&city=${city}&details=Tried_Pass_${pass}`);
                 alert("වැරදි අංකයක්! ❤️");
                 window.location.replace("https://www.google.com");
             }
         }
 
-        function logClick(btnName, sectionId) {
-            fetch(`${SCRIPT_URL}?action=Button_Click&details=${btnName}`);
+        function showSection(id) {
             document.getElementById('main-view').style.display = 'none';
             document.getElementById('stories-view').style.display = 'none';
-            document.getElementById(sectionId).style.display = 'block';
+            document.getElementById(id).style.display = 'block';
         }
 
-        // Duration & Exit Tracking
-        window.addEventListener('beforeunload', function () {
-            if (startTime) {
-                const endTime = new Date();
-                const durationMs = endTime - startTime;
-                const minutes = Math.floor(durationMs / 60000);
-                const seconds = ((durationMs % 60000) / 1000).toFixed(0);
-                const durationStr = `${minutes}m ${seconds}s`;
-                
-                navigator.sendBeacon(`${SCRIPT_URL}?action=Session_End&duration=${durationStr}`);
-                sessionStorage.setItem("is_unlocked", "expired");
+        function showPage() {
+            const page = myStories[currentIdx];
+            const imgTag = document.getElementById("storyImg");
+            document.getElementById("pageDate").innerText = page.date;
+            document.getElementById("pageText").innerText = page.text;
+            document.getElementById("pageNum").innerText = `Pg ${currentIdx + 1} / ${myStories.length}`;
+            
+            if (page.img && page.img.trim() !== "") { 
+                imgTag.src = page.img; 
+                imgTag.style.display = "block"; 
+            } else { 
+                imgTag.style.display = "none"; 
             }
-        });
+        }
+
+        function nextPage() { if (currentIdx < myStories.length - 1) { currentIdx++; showPage(); } }
+        function prevPage() { if (currentIdx > 0) { currentIdx--; showPage(); } }
+
+        function updateLoveCounter() {
+            const diff = new Date() - new Date("2024-10-09T00:00:00");
+            document.getElementById("days").innerText = Math.floor(diff / 86400000);
+            document.getElementById("hours").innerText = Math.floor((diff / 3600000) % 24);
+            document.getElementById("minutes").innerText = Math.floor((diff / 60000) % 60);
+            document.getElementById("seconds").innerText = Math.floor((diff / 1000) % 60);
+        }
     </script>
 </body>
 </html>

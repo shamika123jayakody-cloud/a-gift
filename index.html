@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="si">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Google.com</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
@@ -9,49 +9,35 @@
         :root { --primary-pink: #ff4d6d; --soft-pink: #ff85a1; --bg-gradient: linear-gradient(135deg, #fff5f5 0%, #ffdde1 100%); }
         body { margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; background: var(--bg-gradient); font-family: 'Poppins', sans-serif; text-align: center; overflow-x: hidden; }
         
-        /* Floating Hearts */
         .heart-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; }
         .heart { position: absolute; color: var(--primary-pink); font-size: 15px; animation: moveUp 4s linear infinite; opacity: 0; }
         @keyframes moveUp { 0% { transform: translateY(100vh) scale(0.5); opacity: 1; } 100% { transform: translateY(-10vh) scale(1.5); opacity: 0; } }
 
-        /* Navbar */
         nav { display: none; position: fixed; top: 0; width: 100%; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); padding: 15px 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        nav button { background: none; border: none; font-weight: 600; color: var(--primary-pink); margin: 0 15px; cursor: pointer; font-size: 16px; outline: none; }
+        nav button { background: none; border: none; font-weight: 600; color: var(--primary-pink); margin: 0 10px; cursor: pointer; font-size: 14px; outline: none; }
 
-        /* Login Box */
         .container { background: rgba(255, 255, 255, 0.9); padding: 40px 25px; border-radius: 30px; box-shadow: 0 15px 35px rgba(255, 77, 109, 0.15); width: 90%; max-width: 400px; border: 2px solid white; }
         #passInput { padding: 15px; font-size: 18px; border: 2px solid #ffdde1; border-radius: 15px; width: 80%; text-align: center; margin-bottom: 20px; outline: none; -webkit-text-security: disc; text-security: disc; }
-        .main-btn { padding: 14px 40px; font-size: 18px; font-weight: bold; cursor: pointer; border: none; border-radius: 50px; background: linear-gradient(45deg, var(--primary-pink), var(--soft-pink)); color: white; transition: 0.3s; box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3); }
+        .main-btn { padding: 14px 40px; font-size: 18px; font-weight: bold; cursor: pointer; border: none; border-radius: 50px; background: linear-gradient(45deg, var(--primary-pink), var(--soft-pink)); color: white; transition: 0.3s; box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3); margin-top: 10px; width: 85%; }
 
-        /* Content Sections */
         #result { display: none; margin-top: 80px; width: 95%; max-width: 500px; padding-bottom: 50px; }
         .content-card { background: white; padding: 25px; border-radius: 30px; margin-bottom: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
         img.profile-img { width: 100%; max-width: 280px; border-radius: 25px; border: 6px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
 
-        /* Counter UI */
         .counter-grid { display: flex; justify-content: center; gap: 8px; margin-top: 15px; }
         .counter-item { background: #fff5f7; padding: 10px; border-radius: 15px; min-width: 55px; border: 1px solid #ffdde1; }
         .counter-val { font-size: 20px; font-weight: bold; color: var(--primary-pink); }
         .counter-label { font-size: 9px; color: #888; text-transform: uppercase; }
 
-        /* Diary Page Design */
-        .diary-page { 
-            background: #fffdf5; 
-            background-image: linear-gradient(#e8e0c5 1px, transparent 1px); 
-            background-size: 100% 25px; 
-            padding: 35px 20px 25px 45px; 
-            border-radius: 5px 20px 20px 5px; 
-            box-shadow: 5px 5px 20px rgba(0,0,0,0.1); 
-            min-height: 380px; 
-            position: relative; 
-            border-left: 10px solid #8b4513; 
-            text-align: left; 
-        }
+        .diary-page { background: #fffdf5; background-image: linear-gradient(#e8e0c5 1px, transparent 1px); background-size: 100% 25px; padding: 35px 20px 25px 45px; border-radius: 5px 20px 20px 5px; box-shadow: 5px 5px 20px rgba(0,0,0,0.1); min-height: 380px; position: relative; border-left: 10px solid #8b4513; text-align: left; }
         .diary-page::before { content: ''; position: absolute; left: 35px; top: 0; bottom: 0; width: 2px; background: #ffadad; }
-        .story-img { width: 100%; max-height: 220px; object-fit: cover; border-radius: 15px; margin-bottom: 15px; border: 4px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: none; }
         
-        .page-nav { display: flex; justify-content: center; gap: 20px; margin-top: 20px; }
-        .nav-circle { width: 45px; height: 45px; border-radius: 50%; background: var(--primary-pink); color: white; border: none; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); }
+        .modal-content { background: white; margin: 15% auto; padding: 25px; border-radius: 25px; width: 85%; max-width: 450px; max-height: 60vh; overflow-y: auto; text-align: left; position: relative; }
+        .close { float: right; font-size: 28px; font-weight: bold; color: var(--primary-pink); cursor: pointer; }
+        .reasons-list { list-style: none; padding: 0; }
+        .reasons-list li { padding: 10px 0; border-bottom: 1px dashed #ffd1dc; font-size: 14px; color: #444; }
+        .reasons-list li b { color: var(--primary-pink); margin-right: 8px; }
     </style>
 </head>
 <body>
@@ -59,7 +45,8 @@
 
     <nav id="navbar">
         <button onclick="showSection('main-view')">❤️ Home</button>
-        <button onclick="showSection('stories-view')">📖 Draft msg & memories</button>
+        <button onclick="showSection('stories-view')">📖 Memories</button>
+        <button onclick="openReasons()">💖 Reasons</button>
     </nav>
 
     <div id="login-section" class="container">
@@ -71,62 +58,77 @@
     <div id="result">
         <div id="main-view" class="content-card">
             <h1 style="color: var(--primary-pink); font-size: 1.4rem;">මේක අහන්නකෝ 🥰</h1>
-            <img src="A1.jpeg" alt="Photo" class="profile-img">
+            <img src="./Google.com_files/A1.jpeg" alt="Photo" class="profile-img">
             
             <div style="margin-top: 20px; padding: 15px; background: white; border-radius: 20px;">
                 <p style="color: var(--primary-pink); font-size: 14px; font-weight: 600; margin-bottom: 8px;">අපි ආදරෙන් බැඳිලා අදට... ❤️</p>
                 <div class="counter-grid">
-                    <div class="counter-item"><div id="days" class="counter-val">00</div><div class="counter-label">Days</div></div>
-                    <div class="counter-item"><div id="hours" class="counter-val">00</div><div class="counter-label">Hrs</div></div>
-                    <div class="counter-item"><div id="minutes" class="counter-val">00</div><div class="counter-label">Min</div></div>
-                    <div class="counter-item"><div id="seconds" class="counter-val" style="color: var(--soft-pink);">00</div><div class="counter-label">Sec</div></div>
+                    <div class="counter-item"><div id="days" class="counter-val">0</div><div class="counter-label">Days</div></div>
+                    <div class="counter-item"><div id="hours" class="counter-val">0</div><div class="counter-label">Hrs</div></div>
+                    <div class="counter-item"><div id="minutes" class="counter-val">0</div><div class="counter-label">Min</div></div>
+                    <div class="counter-item"><div id="seconds" class="counter-val" style="color: var(--soft-pink);">0</div><div class="counter-label">Sec</div></div>
                 </div>
             </div>
 
             <div style="text-align: left; background: #fff5f7; padding: 20px; border-radius: 20px; border-left: 6px solid var(--primary-pink); margin-top: 20px; font-size: 15px;">
-                <b>"චූටි මැණීක, මම ගොඩාරියක් ආදරෙයි ඔයාට ❤️❤️"</b>
+                <b>""මගේ රත්තරන් ,
+
+ඔයා මේ Site එකට එන හැම වෙලාවෙම  මට ඔයාට මතක් කරන්න ඕන එකම එක දෙයයි. ඒ තමයි මේ ලෝකේ මම වැඩිපුරම ආදරේ කරන කෙනා ඔයා කියන එක. ඔයා මගේ ජීවිතයට ආපු දවසේ ඉඳන් අද වෙනකම් මගේ හිතේ තියෙන සතුට වචන වලින් විස්තර කරන්න මට තේරෙන්නේ නැහැ. ඔයාගේ හිනාව, ඔයා මාව බලාගන්න විදිහ, ඔයා මාත් එක්ක තරහ වෙන විදිහ පවා මගේ ජීවිතයට ගොඩක් වටිනවා.
+
+ජීවිතේ මොන වගේ බාධක ආවත්, මොන ප්‍රශ්න ආවත් මම හැමදාම ඔයාගේ අතින් අල්ලගෙන ඔයාගේ හෙවනැල්ල වගේ ඉන්නවා කියලා මම පොරොන්දු වෙනවා. මට ඕන ඔයාව මේ ලෝකේ ඉන්න සතුටුම කෙල්ල කරන්නයි. මගේ හැම හීනයක්ම තියෙන්නේ ඔයා එක්කයි. ඔයා තමා මගේ ජීවිතේට ලැබුණු ලොකුම වාසනාව මැනික.
+
+පරිස්සමෙන් ඉන්න මගේ රත්තරන් . මම ඔයාට ගොඩාක් ආදරෙයි! ❤️"</b>
             </div>
         </div>
 
         <div id="stories-view" class="content-card" style="display: none;">
             <h2 style="color: var(--primary-pink);">මතක පොත 📖</h2>
-            
             <div id="diary-container">
                 <div class="diary-page">
                     <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
                         <span id="pageDate" style="color: #8b4513; font-weight: bold; font-size: 13px;"></span>
                         <span id="pageNum" style="color: #8b4513; font-size: 11px;"></span>
                     </div>
-                    <img id="storyImg" src="" class="story-img">
                     <p id="pageText" style="color: #333; line-height: 25px; font-weight: 500; font-size: 15px;"></p>
                 </div>
-                <div class="page-nav">
-                    <button class="nav-circle" onclick="prevPage()">❮</button>
-                    <button class="nav-circle" onclick="nextPage()">❯</button>
+                <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+                    <button onclick="prevPage()" style="background:var(--primary-pink); color:white; border:none; border-radius:50%; width:40px; height:40px; cursor:pointer;">❮</button>
+                    <button onclick="nextPage()" style="background:var(--primary-pink); color:white; border:none; border-radius:50%; width:40px; height:40px; cursor:pointer;">❯</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <div id="reasonsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeReasons()">&times;</span>
+            <h2 style="color: var(--primary-pink); font-size: 1.2rem;">මම ඔයාට ආදරේ කරන්නේ ඇයි? ❤️</h2>
+            <ul id="reasonsList" class="reasons-list"></ul>
+        </div>
+    </div>
+
     <script>
-        // --- මෙතනට ඔයාට ඕන තරම් මතකයන් ටයිප් කරලා ඇඩ් කරන්න ---
-        // අලුත් එකක් ඇඩ් කරනකොට අන්තිමට තියෙන එකට පස්සේ කොමාවක් (,) දාන්න අමතක කරන්න එපා.
         const myStories = [
-            { 
-                date: "2024.10.09", 
-                text: "අද තමයි අපේ ලස්සනම දවස. ඔයා මට කැමති වුණා! ❤️ හම්මෝ ඒකනම් කියල වැඩක් නෑ . එවෙලෙ මගෙ heart beat එක ඩින් ඩින් ගාල යන්නෙ", 
-                img: "" 
-            },
-            { 
-                date: "2026.04.02", 
-                text: "අදනම් අපි ගොඩාක් වෙල කතා කලා , මම කිව්ව වගේ අද තමා අපි ගොඩාක් සතුටින් , ගොඩාක් වෙලා එකට හිටපු වෙලාව . ඒකනම් මරූ . මට මාරම සතුටුයි අනේ . ඔයට ගොඩාක් ummhaa දුන්නා . ඒවගේම ඒක තමා මගේ හොදම birthdayy gift එක. Thank youu මැණික !!", 
-                img: "" 
-            },
-            { 
-                date: "", 
-                text: "", 
-                img: "" 
-            }
+            { date: "2024.10.09", text: "අද තමයි අපේ ලස්සනම දවස. ඔයා මට කැමති වුණා! ❤️ හම්මෝ ඒකනම් කියල වැඩක් නෑ . එවෙලෙ මගෙ heart beat එක ඩින් ඩින් ගාල යන්නෙ" },
+            { date: "2026.04.02", text: "අදනම් අපි ගොඩාක් වෙල කතා කලා , මම කිව්ව වගේ අද තමා අපි ගොඩාක් සතුටින් , ගොඩාක් වෙලා එකට හිටපු වෙලාව . ඒකනම් මරූ . මට මාරම සතුටුයි අනේ . ඔයට ගොඩාක් ummhaa දුන්නා . ඒවගේම ඒක තමා මගේ හොදම birthdayy gift එක. Thank youu මැණික !!" }
+        ];
+
+        const reasonsArr = [
+            "ඔයා මගේ ජීවිතයට ආපු දවස මගේ ජීවිතේ ලස්සනම දවස නිසා.", "ඔයාගේ හිනාව දැක්කම මගේ හැම ප්‍රශ්නයක්ම අමතක වෙන නිසා.",
+            "මට මාවම විශ්වාස නැති වෙලාවටත් ඔයා මාව විශ්වාස කරන නිසා.", "ඔයා එක්ක ඕනෑම දෙයක් ගැන බය නැතුව කතා කරන්න පුළුවන් නිසා.",
+            "ඔයාගේ හඬ ඇහුණම මගේ හිතට පුදුම නිදහසක් දැනෙන නිසා.", "මම වැරදි කරන වෙලාවට මාව නිවැරදි කරලා මාව හොඳ කෙනෙක් කරන නිසා.",
+            "මගේ පොඩි සතුටකදීත් ඔයා මාත් එක්ක ගොඩක් සතුටු වෙන නිසා.", "ඔයා මාව ලෝකේ ඉන්න වාසනාවන්තම කෙනා කියලා මට හිතෙන්න සලස්වන නිසා.",
+            "ඔයාගේ ඇස් දෙක දකිනකොට මට මුළු ලෝකයම පේන නිසා.", "මට දුකක් දැනුනොත් ඒක මුලින්ම දැනෙන්නේ ඔයාට නිසා.",
+            "ඔය නිසා මගේ හීන වලට කොහොම හරි යන නිසා.", "ඔයාගේ අහිංසකකමට(අහිංසකමත් නෑ හැබැයි) මම ගොඩක් ආදරේ නිසා.",
+            "මොන තරම් Busy වුණත් මම වෙනුවෙන් පොඩ්ඩ්ක් හරි time දෙන නිස.", "මම මෝඩ වැඩක් කළත් ඒක ලස්සනයි කියලා ඔයාට හිතෙන නිසා.",
+            "මගේ පවුලේ අයටත් ඔයා ඔයාගේම පවුලේ අයට වගේ ආදරේ කරන නිසා.", "ඔයා මගේ ජීවිතේට ආවට පස්සේ මට අරමුණක් ලැබුණු නිසා.",
+            "ඔයාට තරහ යන එකම හරිම ලස්සන නිසා.", "මම අසනීප වුණාම ඔයා මාව බලාගන්න විදිහට මම ආදරේ නිසා.",
+            "මගේ දුර්වලකම් දැනගෙනත් මට ගොඩක් ආදරේ කරන නිසා.", "ඔයා එක්ක ඉන්නකොට වෙලාව යනවා දැනෙන්නේ නැති නිසා.",
+            "මම කරන පොඩි දේකට පවා ඔයා ස්තූති කරන නිසා.", "අපි දෙන්නා අතර තියෙන බැඳීම ලෝකේ කිසිම දේකට දෙවැනි නැති නිසා.",
+            "ඔයා මට දෙන ආදරණීය නම් වලට මම ආදරේ නිසා.", "මාව හිනස්වන්න ඔයා කරන දේවල් හරිම ආදරණීය නිසා.",
+            "හැමදාම උදේට ඔයාව බලාගෙන ස්කෝලෙ එන්න ආස නිසා.", "රෑට නිදියගන්න කලින් ඔයාගේ photo එකකට kiss දෙන නිසා.",
+            "ඔයා මගේ ලෝකයේ මට ඉන්න හොඳම යාළුවා නිසා.", "මට ජීවත් වෙන්න ලොකු බලාපොරොත්තුවක් ඔයා නිසා.",
+            "ඔයාගේ ගතිගුණ හරිම හොද නිසා.", "මම වෙනුවෙන් ඔයා කරන කැපකිරීම් මට පේන නිසා."
         ];
 
         let currentIdx = 0;
@@ -148,13 +150,9 @@
                 document.getElementById('result').style.display = 'block';
                 document.getElementById('navbar').style.display = 'block';
                 confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
-                updateLoveCounter();
                 setInterval(updateLoveCounter, 1000);
                 showPage();
-            } else {
-                alert("වැරදි අංකයක්! ❤️");
-                window.location.replace("https://www.google.com");
-            }
+            } else { alert("වැරදි අංකයක්! ❤️"); }
         }
 
         function showSection(id) {
@@ -163,21 +161,25 @@
             document.getElementById(id).style.display = 'block';
         }
 
+        function openReasons() {
+            const list = document.getElementById('reasonsList');
+            if(list.innerHTML === "") {
+                reasonsArr.forEach((r, i) => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<b>${i+1}.</b> ${r}`;
+                    list.appendChild(li);
+                });
+            }
+            document.getElementById('reasonsModal').style.display = 'block';
+        }
+        function closeReasons() { document.getElementById('reasonsModal').style.display = 'none'; }
+
         function showPage() {
             const page = myStories[currentIdx];
-            const imgTag = document.getElementById("storyImg");
             document.getElementById("pageDate").innerText = page.date;
             document.getElementById("pageText").innerText = page.text;
             document.getElementById("pageNum").innerText = `Pg ${currentIdx + 1} / ${myStories.length}`;
-            
-            if (page.img && page.img.trim() !== "") { 
-                imgTag.src = page.img; 
-                imgTag.style.display = "block"; 
-            } else { 
-                imgTag.style.display = "none"; 
-            }
         }
-
         function nextPage() { if (currentIdx < myStories.length - 1) { currentIdx++; showPage(); } }
         function prevPage() { if (currentIdx > 0) { currentIdx--; showPage(); } }
 

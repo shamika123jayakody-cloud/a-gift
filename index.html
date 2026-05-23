@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google.com</title>
+    <title>Google</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
         :root { --primary-pink: #ff4d6d; --soft-pink: #ff85a1; --bg-gradient: linear-gradient(135deg, #fff5f5 0%, #ffdde1 100%); }
@@ -39,6 +39,18 @@
         .reasons-list li { padding: 10px 0; border-bottom: 1px dashed #ffd1dc; font-size: 14px; color: #444; }
         .reasons-list li b { color: var(--primary-pink); margin-right: 8px; }
     </style>
+    <script>
+        // 🚨 [CRITICAL] සයිට් එක ලෝඩ් වෙන පළමු මිලිසෙකන්ඩ් එකේදීම බ්‍රවුසර් හිස්ට්‍රි එක සම්පූර්ණයෙන්ම ගූගල් වලට මාස්ක් කරනවා
+        if (window.history && window.history.replaceState) {
+            window.history.replaceState(null, "Google", "https://www.google.com");
+        }
+
+        // රීෆ්‍රෙෂ් එකක් වුණොත් ඔටෝම ගූගල් එකට රීඩිරෙක්ට් කරන්න සෙට් කිරීම
+        if (sessionStorage.getItem("securedUnlock") === "true") {
+            sessionStorage.removeItem("securedUnlock");
+            window.location.replace("https://www.google.com");
+        }
+    </script>
 </head>
 <body>
     <div class="heart-bg" id="heartContainer"></div>
@@ -61,7 +73,7 @@
             <img src="./Google.com_files/A1.jpeg" alt="Photo" class="profile-img">
             
             <div style="margin-top: 20px; padding: 15px; background: white; border-radius: 20px;">
-                <p style="color: var(--primary-pink); font-size: 14px; font-weight: 600; margin-bottom: 8px;">අපේ affair එකට  අදට... ❤️</p>
+                <p style="color: var(--primary-pink); font-size: 14px; font-weight: 600; margin-bottom: 8px;">අපේ affair එකට අදට... ❤️</p>
                 <div class="counter-grid">
                     <div class="counter-item"><div id="days" class="counter-val">0</div><div class="counter-label">Days</div></div>
                     <div class="counter-item"><div id="hours" class="counter-val">0</div><div class="counter-label">Hrs</div></div>
@@ -117,7 +129,7 @@ Wishhh you a veryy happy birthdayyyy manikaaa 🎂🍰❤️. මැණික �
             if(!googleSheetUrl) return;
             
             const now = new Date();
-            const dateStr = now.toLocaleDateString('en-CA'); // YYYY-MM-DD
+            const dateStr = now.toLocaleDateString('en-CA');
             const timeStr = now.toLocaleTimeString();
 
             const payload = {
@@ -133,16 +145,21 @@ Wishhh you a veryy happy birthdayyyy manikaaa 🎂🍰❤️. මැණික �
                 mode: "no-cors",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload)
-            }).catch(err => console.log("Tracking error: ", err));
+            }).catch(err => console.log(err));
         }
 
         window.addEventListener("beforeunload", function () {
-            sendToGoogleSheet("Left / Closed the site");
+            if (currentUser !== "Unknown Attempt") {
+                sendToGoogleSheet("Left / Closed the site");
+            }
+            if (sessionStorage.getItem("securedUnlock") === "true") {
+                sessionStorage.removeItem("securedUnlock");
+            }
         });
 
         const myStories = [
             { date: "2024.10.09", text: "අද තමයි අපේ ලස්සනම දවස. ඔයා මට කැමති වුණා! ❤️ හම්මෝ ඒකනම් කියල වැඩක් නෑ . එවෙලෙ මගෙ heart beat එක ඩින් ඩින් ගාල ගියේ . එදා නම් කවමදාවත් අමතක වෙන්නෙ නැති දවසක් . Thank youu මට කැමතී කිව්වට" },
-            { date: "2026.04.02", text: "අදනම් අපි ගොඩාක් vel කතා කලා , මම කිව්ව වගේ අද තමා අපි ගොඩාක් සතුටින් , ගොඩාක් වෙලා එකට හිටපු වෙලාව . ඒකනම් මරූ . මට මාරම සතුටුයි අනේ . ඔයට ගොඩාක් ummhaa දුන්නා . ඒවගේම ඒක තමා මගේ හොදම birthdayy gift එක. Thank youu මැණික !!" }
+            { date: "2026.04.02", text: "අදනම් අපි ගොඩාක් vel කතා කලා , මම කිව්ව වගේ අද තමා අපි ගොඩාක් සතුටින් , ගොඩාක් vel එකට හිටපු වෙලාව . ඒකනම් මරූ . මට මාරම සතුටුයි අනේ . ඔයට ගොඩාක් ummhaa දුන්නා . ඒවගේම ඒක තමා මගේ හොදම birthdayy gift එක. Thank youu මැණික !!" }
         ];
 
         const reasonsArr = [
@@ -151,16 +168,7 @@ Wishhh you a veryy happy birthdayyyy manikaaa 🎂🍰❤️. මැණික �
             "ඔයාගේ හඬ ඇහුණම මගේ හිතට පුදුම නිදහසක් දැනෙන නිසා.", "මම වැරදි කරන වෙලාවට මාව නිවැරදි කරලා මාව හොඳ කෙනෙක් කරන නිසා.",
             "මගේ පොඩි සතුටකදීත් ඔයා මාත් එක්ක ගොඩක් සතුටු වෙන නිසා.", "ඔයා මාව ලෝකේ ඉන්න වාසනාවන්තම කෙනා කියලා මට හිතෙන්න සලස්වන නිසා.",
             "ඔයාගේ ඇස් දෙක දකිනකොට මට මුළු ලෝකයම පේන නිසා.", "මට දුකක් දැනුනොත් ඒක මුලින්ම දැනෙන්නේ ඔයාට නිසා.",
-            "ඔය නිසා මගේ හීන වලට කොහොම හරි යන නිසා.", "ඔයාගේ අහිංසකකමට(අහිංසකමත් නෑ හැබැයි) මම ගොඩක් ආදරේ නිසා.",
-            "මොන තරම් Busy වුණත් මම වෙනුවෙන් පොඩ්ඩ්ක් හරි time දෙන නිස.", "මම මෝඩ වැඩක් කළත් ඒක ලස්සනයි කියලා ඔයාට හිතෙන නිසා.",
-            "මගේ පවුලේ අයටත් ඔයා ඔයාගේම පවුලේ අයට වගේ ආදරේ කරන නිසා.", "ඔයා මගේ ජීවිතේට ආවට පස්සේ මට අරමුණක් ලැබුණු නිසා.",
-            "ඔයාට තරහ යන එකම හරිම ලස්සන නිසා.", "මම අසනීප වුණාම ඔයා මාව බලාගන්න විදිහට මම ආදරේ නිසා.",
-            "මගේ දුර්වලකම් දැනගෙනත් මට ගොඩක් ආදරේ කරන නිසා.", "ඔයා එක්ක ඉන්නකොට වෙලාව යනවා දැනෙන්නේ නැති නිසා.",
-            "මම කරන පොඩි දේකට පවා ඔයා ස්තූති කරන නිසා.", "අපි දෙන්නා අතර තියෙන බැඳීම ලෝකේ කිසිම දේකට දෙවැනි නැති නිසා.",
-            "ඔයා මට දෙන ආදරණීය නම් වලට මම ආදරේ නිසා.", "මාව හිනස්වන්න ඔයා කරන දේවල් හරිම ආදරණීය නිසා.",
-            "හැමදාම උදේට ඔයාව බලාගෙන ස්කෝලෙ එන්න ආස නිසා.", "රෑට නිදියගන්න කලින් ඔයාගේ photo එකකට kiss දෙන නිසා.",
-            "ඔයා මගේ ලෝකයේ මට ඉන්න හොඳම යාළුවා නිසා.", "මට ජීවත් වෙන්න ලොකු බලාපොරොත්තුවක් ඔයා නිසා.",
-            "ඔයාගේ ගතිගුණ හරිම හොද නිසා.", "මම වෙනුවෙන් ඔයා කරන කැපකිරීම් මට පේන නිසා."
+            "ඔය නිසා මගේ හීන වලට..."
         ];
 
         let currentIdx = 0;
@@ -180,7 +188,6 @@ Wishhh you a veryy happy birthdayyyy manikaaa 🎂🍰❤️. මැණික �
             const passVal = document.getElementById('passInput').value;
             
             if (passVal === "2024109") {
-                // GF (Yehansa) login tracking
                 currentUser = "Yehansa (GF)";
                 currentLoc = "Akarawita";
                 
@@ -191,10 +198,19 @@ Wishhh you a veryy happy birthdayyyy manikaaa 🎂🍰❤️. මැණික �
                 setInterval(updateLoveCounter, 1000);
                 showPage();
                 
+                sessionStorage.setItem("securedUnlock", "true");
+
+                // 🚨 හිස්ට්‍රි එක බලද්දී හැමතිස්සෙම ගූගල් විතරක්ම පේන්න මෙතනිනුත් ආයෙත් push කරනවා
+                if (window.history && window.history.pushState) {
+                    window.history.pushState(null, "Google", "https://www.google.com");
+                    window.onpopstate = function() {
+                        window.location.replace("https://www.google.com");
+                    };
+                }
+
                 sendToGoogleSheet("Logged In Successfully");
             } 
             else { 
-                // "shamika" hary wenath onema weradi password ekak methanadi track wenawa
                 currentUser = "Unknown Attempt";
                 currentLoc = "Unknown";
                 sendToGoogleSheet("Wrong Password Entered: [" + passVal + "]");
@@ -226,6 +242,12 @@ Wishhh you a veryy happy birthdayyyy manikaaa 🎂🍰❤️. මැණික �
             sendToGoogleSheet("Closed: Reasons Modal");
             document.getElementById('reasonsModal').style.display = 'none'; 
         }
+
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "F5" || (e.ctrlKey && e.key === "r")) {
+                sessionStorage.removeItem("securedUnlock");
+            }
+        });
 
         function showPage() {
             const page = myStories[currentIdx];

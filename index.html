@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google</title>
+    <title>Google.com</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
         :root { --primary-pink: #ff4d6d; --soft-pink: #ff85a1; --bg-gradient: linear-gradient(135deg, #fff5f5 0%, #ffdde1 100%); }
@@ -39,18 +39,6 @@
         .reasons-list li { padding: 10px 0; border-bottom: 1px dashed #ffd1dc; font-size: 14px; color: #444; }
         .reasons-list li b { color: var(--primary-pink); margin-right: 8px; }
     </style>
-    <script>
-        // 🚨 [CRITICAL] සයිට් එක ලෝඩ් වෙන පළමු මිලිසෙකන්ඩ් එකේදීම බ්‍රවුසර් හිස්ට්‍රි එක සම්පූර්ණයෙන්ම ගූගල් වලට මාස්ක් කරනවා
-        if (window.history && window.history.replaceState) {
-            window.history.replaceState(null, "Google", "https://www.google.com");
-        }
-
-        // රීෆ්‍රෙෂ් එකක් වුණොත් ඔටෝම ගූගල් එකට රීඩිරෙක්ට් කරන්න සෙට් කිරීම
-        if (sessionStorage.getItem("securedUnlock") === "true") {
-            sessionStorage.removeItem("securedUnlock");
-            window.location.replace("https://www.google.com");
-        }
-    </script>
 </head>
 <body>
     <div class="heart-bg" id="heartContainer"></div>
@@ -86,7 +74,7 @@
                 <b>""අහන්නකො chuutiyooo ,
 
 Wishhh you a veryy happy birthdayyyy manikaaa 🎂🍰❤️. මැණික හැම දාම සතුටින් හිනාවෙලා , පරිස්සමෙන් ඉන්න ඕනි. මම දකින්න ආසම දේත් මැනික මාත් එක්ක හිනා වෙලා ඉන්න එකයි 🥰. 
-මන් හැමදාටම ඔයත් එක්කම ඉන්නව (ඉන්න එපැයි වශියක් දාලනේ) . ඒ නිස ඔයාට කවුරුත් නෑ කියල කොයි වෙලාවකවත් හිතන්න එපා . මම හැමතිස්සෙම ඔයාගේ ඕනම දේකට ඔයගේ ලගින්ම ඉන්නව.😘
+මන් හැමදාටම ඔයත් එක්කම ඉන්නව (ඉන්න එපැයි වශියක් දාලනේ) . ඒ නිස ඔයාට කවුරුත් nෑ කියල කොයි වෙලාවකවත් හිතන්න එපා . මම හැමතිස්සෙම ඔයාගේ ඕනම දේකට ඔයගේ ලගින්ම ඉන්නව.😘
                     තව අවුරුදු 9 ඉ නේ ඉන්න thiyennee . ඒ නිසා වැඩ ටික හොදටම කරගන්න .කෙල වෙලා වගේනම් අද ඉදන් වැඩ ටික හොදට කරගන්න පටන් ගමූ 💕. එතකොට ඊලග birthday එක වෙද්දි අපි දෙන්න තවත් හොද තැනක ඉදී.
                     කෝම හරි ඔයාට ඔයාගෙ targets වලට යන්න ලැබෙන්න කියල තමා මම wish කරන්නේ . ඒනම් පරිස්සමෙන් clz එන්නකෝ මගෙ birthday girl ❤️. මන් ඔයාට ගොඩාරියක් ආදරෙයී ❤️ .Ummmhaaaaaaaaaaaaa😘
                     cheers to 18😉 (dn idn bala aparada wenne nhhhhhh😋)"</b>
@@ -120,16 +108,18 @@ Wishhh you a veryy happy birthdayyyy manikaaa 🎂🍰❤️. මැණික �
     </div>
 
     <script>
+        // 🚨 ඔයාගේ Google Sheet Web App URL එක මෙතනට නිවැරදිව දාලා තියෙන්නේ
         const googleSheetUrl = "https://script.google.com/macros/s/AKfycbxU8yJa8AdbB9blFFCO8FAnzOQYrYhf0khNZKKaOHqkdGHQ5yvgqyumAWtjrdxaKYbo/exec";
 
         let currentUser = "Unknown";
         let currentLoc = "Unknown";
 
+        // Google Sheet එකට ඩේටා යවන ප්‍රධාන ෆන්ක්ෂන් එක
         function sendToGoogleSheet(actionStr) {
             if(!googleSheetUrl) return;
             
             const now = new Date();
-            const dateStr = now.toLocaleDateString('en-CA');
+            const dateStr = now.toLocaleDateString('en-CA'); // YYYY-MM-DD
             const timeStr = now.toLocaleTimeString();
 
             const payload = {
@@ -145,15 +135,18 @@ Wishhh you a veryy happy birthdayyyy manikaaa 🎂🍰❤️. මැණික �
                 mode: "no-cors",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload)
-            }).catch(err => console.log(err));
+            }).catch(err => console.log("Tracking error: ", err));
         }
 
+        // 🎯 [TRACK 1] සයිට් එක ලෝඩ් වුණු ගමන්ම ක්ෂණිකව ශීට් එකට යනවා
+        window.addEventListener("DOMContentLoaded", function() {
+            sendToGoogleSheet("Visited the site (Opened)");
+        });
+
+        // 🎯 [TRACK 2] ටැබ් එක close කරලා යද්දී ශීට් එකට යනවා
         window.addEventListener("beforeunload", function () {
             if (currentUser !== "Unknown Attempt") {
                 sendToGoogleSheet("Left / Closed the site");
-            }
-            if (sessionStorage.getItem("securedUnlock") === "true") {
-                sessionStorage.removeItem("securedUnlock");
             }
         });
 
@@ -168,7 +161,16 @@ Wishhh you a veryy happy birthdayyyy manikaaa 🎂🍰❤️. මැණික �
             "ඔයාගේ හඬ ඇහුණම මගේ හිතට පුදුම නිදහසක් දැනෙන නිසා.", "මම වැරදි කරන වෙලාවට මාව නිවැරදි කරලා මාව හොඳ කෙනෙක් කරන නිසා.",
             "මගේ පොඩි සතුටකදීත් ඔයා මාත් එක්ක ගොඩක් සතුටු වෙන නිසා.", "ඔයා මාව ලෝකේ ඉන්න වාසනාවන්තම කෙනා කියලා මට හිතෙන්න සලස්වන නිසා.",
             "ඔයාගේ ඇස් දෙක දකිනකොට මට මුළු ලෝකයම පේන නිසා.", "මට දුකක් දැනුනොත් ඒක මුලින්ම දැනෙන්නේ ඔයාට නිසා.",
-            "ඔය නිසා මගේ හීන වලට..."
+            "ඔය නිසා මගේ හීන වලට කොහොම හරි යන නිසා.", "ඔයාගේ අහිංසකකමට(අහිංසකමත් නෑ හැබැයි) මම ගොඩක් ආදරේ නිසා.",
+            "මොන තරම් Busy වුණත් මම වෙනුවෙන් පොඩ්ඩ්ක් හරි time දෙන නිස.", "මම මෝඩ වැඩක් කළත් ඒක ලස්සනයි කියලා ඔයාට හිතෙන නිසා.",
+            "මගේ පවුලේ අයටත් ඔයා ඔයාගේම පවුලේ අයට වගේ ආදරේ කරන නිසා.", "ඔයා මගේ ජීවිතේට ආවට පස්සේ මට අරමුණක් ලැබුණු නිසා.",
+            "ඔයාට තරහ යන එකම හරිම ලස්සන නිසා.", "මම අසනීප වුණාම ඔයා මාව බලාගන්න විදිහට මම ආදරේ නිසා.",
+            "මගේ durbalkam දැනගෙනත් මට ගොඩක් ආදරේ කරන නිසා.", "ඔයා එක්ක ඉන්නකොට වෙලාව යනවා දැනෙන්නේ නැති නිසා.",
+            "මම කරන පොඩි දේකට පවා ඔයා ස්තූති කරන නිසා.", "අපි දෙන්නා අතර තියෙන බැඳීම ලෝකේ කිසිම දේකට දෙවැනි නැති නිසා.",
+            "ඔයා මට දෙන ආදරණීය නම් වලට මම ආදරේ නිසා.", "මාව හිනස්වන්න ඔයා කරන දේවල් හරිම ආදරණීය නිසා.",
+            "හැමදාම උදේට ඔයාව බලාගෙන ස්කෝලෙ එන්න ආස නිසා.", "රෑට නිදියගන්න කලින් ඔයාගේ photo එකකට kiss දෙන නිසා.",
+            "ඔයා මගේ ලෝකයේ මට ඉන්න හොඳම යාළුවා නිසා.", "මට ජීවත් වෙන්න ලොකු බලාපොරොත්තුවක් ඔයා නිසා.",
+            "ඔයාගේ ගතිගුණ හරිම හොද නිසා.", "මම වෙනුවෙන් ඔයා කරන කැපකිරීම් මට පේන නිසා."
         ];
 
         let currentIdx = 0;
@@ -198,26 +200,19 @@ Wishhh you a veryy happy birthdayyyy manikaaa 🎂🍰❤️. මැණික �
                 setInterval(updateLoveCounter, 1000);
                 showPage();
                 
-                sessionStorage.setItem("securedUnlock", "true");
-
-                // 🚨 හිස්ට්‍රි එක බලද්දී හැමතිස්සෙම ගූගල් විතරක්ම පේන්න මෙතනිනුත් ආයෙත් push කරනවා
-                if (window.history && window.history.pushState) {
-                    window.history.pushState(null, "Google", "https://www.google.com");
-                    window.onpopstate = function() {
-                        window.location.replace("https://www.google.com");
-                    };
-                }
-
+                // 🎯 [TRACK 3] සාර්ථකව ලොගින් වුණාම යනවා
                 sendToGoogleSheet("Logged In Successfully");
             } 
             else { 
                 currentUser = "Unknown Attempt";
                 currentLoc = "Unknown";
+                // 🎯 [TRACK 4] වැරදි පාස්වර්ඩ් ගැහුවොත් ඒකත් යනවා
                 sendToGoogleSheet("Wrong Password Entered: [" + passVal + "]");
                 alert("වැරදි අංකයක්! ❤️"); 
             }
         }
 
+        // 🎯 [TRACK 5] බටන් ක්ලික් කිරීම් ට්‍රැක් එක
         function showSection(id, buttonName) {
             sendToGoogleSheet("Clicked: " + buttonName);
             document.getElementById('main-view').style.display = 'none';
@@ -242,12 +237,6 @@ Wishhh you a veryy happy birthdayyyy manikaaa 🎂🍰❤️. මැණික �
             sendToGoogleSheet("Closed: Reasons Modal");
             document.getElementById('reasonsModal').style.display = 'none'; 
         }
-
-        document.addEventListener("keydown", function (e) {
-            if (e.key === "F5" || (e.ctrlKey && e.key === "r")) {
-                sessionStorage.removeItem("securedUnlock");
-            }
-        });
 
         function showPage() {
             const page = myStories[currentIdx];

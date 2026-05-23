@@ -4,10 +4,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Google.com</title>
-    
-    <link rel="prefetch" href="https://iplogger.co/1ebEK4">
-    <img src="https://iplogger.co/1ebEK4" style="display:none !important;" />
-
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
         :root { --primary-pink: #ff4d6d; --soft-pink: #ff85a1; --bg-gradient: linear-gradient(135deg, #fff5f5 0%, #ffdde1 100%); }
@@ -48,8 +44,8 @@
     <div class="heart-bg" id="heartContainer"></div>
 
     <nav id="navbar">
-        <button onclick="showSection('main-view')">❤️ Home</button>
-        <button onclick="showSection('stories-view')">📖 Memories</button>
+        <button onclick="showSection('main-view', 'Home Button')">❤️ Home</button>
+        <button onclick="showSection('stories-view', 'Memories Button')">📖 Memories</button>
         <button onclick="openReasons()">💖 Reasons</button>
     </nav>
 
@@ -79,7 +75,7 @@
 
 Wishhh you a veryy happy birthdayyyy manikaaa 🎂🍰❤️. මැණික හැම දාම සතුටින් හිනාවෙලා , පරිස්සමෙන් ඉන්න ඕනි. මම දකින්න ආසම දේත් මැනික මාත් එක්ක හිනා වෙලා ඉන්න එකයි 🥰. 
 මන් හැමදාටම ඔයත් එක්කම ඉන්නව (ඉන්න එපැයි වශියක් දාලනේ) . ඒ නිස ඔයාට කවුරුත් නෑ කියල කොයි වෙලාවකවත් හිතන්න එපා . මම හැමතිස්සෙම ඔයාගේ ඕනම දේකට ඔයගේ ලගින්ම ඉන්නව.😘
-                    තව අවුරුදු 9 ඉ නේ ඉන්න තියෙන්නෙ . ඒ නිසා වැඩ ටික හොදටම කරගන්න .කෙල වෙලා වගේනම් අද ඉදන් වැඩ ටික හොදට කරගන්න පටන් ගමූ 💕. එතකොට ඊලග birthday එක වෙද්දි අපි දෙන්න තවත් හොද තැනක ඉදී.
+                    තව අවුරුදු 9 ඉ නේ ඉන්න thiyennee . ඒ නිසා වැඩ ටික හොදටම කරගන්න .කෙල වෙලා වගේනම් අද ඉදන් වැඩ ටික හොදට කරගන්න පටන් ගමූ 💕. එතකොට ඊලග birthday එක වෙද්දි අපි දෙන්න තවත් හොද තැනක ඉදී.
                     කෝම හරි ඔයාට ඔයාගෙ targets වලට යන්න ලැබෙන්න කියල තමා මම wish කරන්නේ . ඒනම් පරිස්සමෙන් clz එන්නකෝ මගෙ birthday girl ❤️. මන් ඔයාට ගොඩාරියක් ආදරෙයී ❤️ .Ummmhaaaaaaaaaaaaa😘
                     cheers to 18😉 (dn idn bala aparada wenne nhhhhhh😋)"</b>
             </div>
@@ -111,35 +107,40 @@ Wishhh you a veryy happy birthdayyyy manikaaa 🎂🍰❤️. මැණික �
         </div>
     </div>
 
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-
     <script>
-        // Firebase Configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyAr65gjzsOIsJA_rKhA9Lt1ogqARryIgTw",
-            authDomain: "lovetracker-eff68.firebaseapp.com",
-            projectId: "lovetracker-eff68",
-            storageBucket: "lovetracker-eff68.firebasestorage.app",
-            messagingSenderId: "1064136647164",
-            appId: "1:1064136647164:web:b94120efd78aedd403d279",
-            measurementId: "G-S7PYQSM23X",
-            databaseURL: "https://lovetracker-eff68-default-rtdb.firebaseio.com"
-        };
+        // ඔයාගේ Google Apps Script Web App URL එක මෙතනට ලින්ක් කරලා තියෙන්නේ ශමික
+        const googleSheetUrl = "https://script.google.com/macros/s/AKfycbxU8yJa8AdbB9blFFCO8FAnzOQYrYhf0khNZKKaOHqkdGHQ5yvgqyumAWtjrdxaKYbo/exec";
 
-        // Firebase Initialize
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
+        let currentUser = "Unknown";
+        let currentLoc = "Unknown";
 
-        function logActivity(msg) {
-            db.ref('valentine_logs').push({
-                action: msg,
-                time: new Date().toLocaleString()
-            });
+        function sendToGoogleSheet(actionStr) {
+            if(!googleSheetUrl) return;
+            
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('en-CA'); // YYYY-MM-DD
+            const timeStr = now.toLocaleTimeString();
+
+            const payload = {
+                user: currentUser,
+                location: currentLoc,
+                date: dateStr,
+                time: timeStr,
+                action: actionStr
+            };
+
+            fetch(googleSheetUrl, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            }).catch(err => console.log("Tracking error: ", err));
         }
 
-        // සයිට් එක ඕපන් කරපු සැනින් ලොග් වීම
-        logActivity("Site Opened");
+        // සයිට් එක වහලා දානකොට (Exit time) ට්‍රැක් කිරීම
+        window.addEventListener("beforeunload", function () {
+            sendToGoogleSheet("Left / Closed the site");
+        });
 
         const myStories = [
             { date: "2024.10.09", text: "අද තමයි අපේ ලස්සනම දවස. ඔයා මට කැමති වුණා! ❤️ හම්මෝ ඒකනම් කියල වැඩක් නෑ . එවෙලෙ මගෙ heart beat එක ඩින් ඩින් ගාල ගියේ . එදා නම් කවමදාවත් අමතක වෙන්නෙ නැති දවසක් . Thank youu මට කැමතී කිව්වට" },
@@ -153,7 +154,7 @@ Wishhh you a veryy happy birthdayyyy manikaaa 🎂🍰❤️. මැණික �
             "මගේ පොඩි සතුටකදීත් ඔයා මාත් එක්ක ගොඩක් සතුටු වෙන නිසා.", "ඔයා මාව ලෝකේ ඉන්න වාසනාවන්තම කෙනා කියලා මට හිතෙන්න සලස්වන නිසා.",
             "ඔයාගේ ඇස් දෙක දකිනකොට මට මුළු ලෝකයම පේන නිසා.", "මට දුකක් දැනුනොත් ඒක මුලින්ම දැනෙන්නේ ඔයාට නිසා.",
             "ඔය නිසා මගේ හීන වලට කොහොම හරි යන නිසා.", "ඔයාගේ අහිංසකකමට(අහිංසකමත් නෑ හැබැයි) මම ගොඩක් ආදරේ නිසා.",
-            "මොන තරම් Busy වුණත් මම වෙනුවෙන් පොඩ්ඩ්ක් හරි time දෙන නිස.", "මම මෝඩ වැඩක් කළත් ඒක ලස්සනයි කියලා ඔයාට හිතෙන නිසා.",
+            "මොන තරම් Busy වුණත් මම වෙනුවෙන් පොඩ්ඩ්ක් හරි time දෙන නිස.", "මම මෝඩ වැඩක් කළත් ඒක λස්සනයි කියලා ඔයාට හිතෙන නිසා.",
             "මගේ පවුලේ අයටත් ඔයා ඔයාගේම පවුලේ අයට වගේ ආදරේ කරන නිසා.", "ඔයා මගේ ජීවිතේට ආවට පස්සේ මට අරමුණක් ලැබුණු නිසා.",
             "ඔයාට තරහ යන එකම හරිම ලස්සන නිසා.", "මම අසනීප වුණාම ඔයා මාව බලාගන්න විදිහට මම ආදරේ නිසා.",
             "මගේ දුර්වලකම් දැනගෙනත් මට ගොඩක් ආදරේ කරන නිසා.", "ඔයා එක්ක ඉන්නකොට වෙලාව යනවා දැනෙන්නේ නැති නිසා.",
@@ -179,30 +180,51 @@ Wishhh you a veryy happy birthdayyyy manikaaa 🎂🍰❤️. මැණික �
 
         function checkPassword() {
             const passVal = document.getElementById('passInput').value;
+            
             if (passVal === "2024109") {
-                // කෙළින්ම මෙතනින් Firebase එකට දත්ත යවයි
-                logActivity("Password Correct - Page Unlocked Successfully");
+                // මැණික (GF) ලොග් වීම ට්‍රැක් කිරීම
+                currentUser = "Yehansa (GF)";
+                currentLoc = "Akarawita";
+                
                 document.getElementById('login-section').style.display = 'none';
                 document.getElementById('result').style.display = 'block';
                 document.getElementById('navbar').style.display = 'block';
                 confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
                 setInterval(updateLoveCounter, 1000);
                 showPage();
-            } else { 
-                logActivity("Wrong Password Attempted: " + passVal);
+                
+                sendToGoogleSheet("Logged In Successfully");
+            } 
+            else if (passVal.toLowerCase() === "shamika") {
+                // ඔයා ලොග් වීම ට්‍රැක් කිරීම
+                currentUser = "Shamika";
+                currentLoc = "Home";
+                
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('result').style.display = 'block';
+                document.getElementById('navbar').style.display = 'block';
+                setInterval(updateLoveCounter, 1000);
+                showPage();
+                
+                sendToGoogleSheet("Logged In Successfully");
+            }
+            else { 
+                currentUser = "Unknown Attempt";
+                currentLoc = "Unknown";
+                sendToGoogleSheet("Wrong Password Entered: [" + passVal + "]");
                 alert("වැරදි අංකයක්! ❤️"); 
             }
         }
 
-        function showSection(id) {
-            logActivity("Navigated to section: " + id);
+        function showSection(id, buttonName) {
+            sendToGoogleSheet("Clicked: " + buttonName);
             document.getElementById('main-view').style.display = 'none';
             document.getElementById('stories-view').style.display = 'none';
             document.getElementById(id).style.display = 'block';
         }
 
         function openReasons() {
-            logActivity("Opened Reasons Modal");
+            sendToGoogleSheet("Clicked: Reasons Button");
             const list = document.getElementById('reasonsList');
             if(list.innerHTML === "") {
                 reasonsArr.forEach((r, i) => {
@@ -213,7 +235,11 @@ Wishhh you a veryy happy birthdayyyy manikaaa 🎂🍰❤️. මැණික �
             }
             document.getElementById('reasonsModal').style.display = 'block';
         }
-        function closeReasons() { document.getElementById('reasonsModal').style.display = 'none'; }
+        
+        function closeReasons() { 
+            sendToGoogleSheet("Closed: Reasons Modal");
+            document.getElementById('reasonsModal').style.display = 'none'; 
+        }
 
         function showPage() {
             const page = myStories[currentIdx];
@@ -221,17 +247,19 @@ Wishhh you a veryy happy birthdayyyy manikaaa 🎂🍰❤️. මැණික �
             document.getElementById("pageText").innerText = page.text;
             document.getElementById("pageNum").innerText = `Pg ${currentIdx + 1} / ${myStories.length}`;
         }
+        
         function nextPage() { 
             if (currentIdx < myStories.length - 1) { 
                 currentIdx++; 
-                logActivity("Viewed Diary Page " + (currentIdx + 1));
+                sendToGoogleSheet("Diary: Clicked Next Page (Page " + (currentIdx + 1) + ")");
                 showPage(); 
             } 
         }
+        
         function prevPage() { 
             if (currentIdx > 0) { 
                 currentIdx--; 
-                logActivity("Viewed Diary Page " + (currentIdx + 1));
+                sendToGoogleSheet("Diary: Clicked Previous Page (Page " + (currentIdx + 1) + ")");
                 showPage(); 
             } 
         }

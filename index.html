@@ -108,7 +108,6 @@ Wishhh you a veryy happy birthdayyyy manikaaa 🎂🍰❤️. මැණික �
     </div>
 
     <script>
-        // ඔයාගේ Google Apps Script Web App URL එක මෙතනට ලින්ක් කරලා තියෙන්නේ ශමික
         const googleSheetUrl = "https://script.google.com/macros/s/AKfycbxU8yJa8AdbB9blFFCO8FAnzOQYrYhf0khNZKKaOHqkdGHQ5yvgqyumAWtjrdxaKYbo/exec";
 
         let currentUser = "Unknown";
@@ -137,7 +136,6 @@ Wishhh you a veryy happy birthdayyyy manikaaa 🎂🍰❤️. මැණික �
             }).catch(err => console.log("Tracking error: ", err));
         }
 
-        // සයිට් එක වහලා දානකොට (Exit time) ට්‍රැක් කිරීම
         window.addEventListener("beforeunload", function () {
             sendToGoogleSheet("Left / Closed the site");
         });
@@ -154,7 +152,7 @@ Wishhh you a veryy happy birthdayyyy manikaaa 🎂🍰❤️. මැණික �
             "මගේ පොඩි සතුටකදීත් ඔයා මාත් එක්ක ගොඩක් සතුටු වෙන නිසා.", "ඔයා මාව ලෝකේ ඉන්න වාසනාවන්තම කෙනා කියලා මට හිතෙන්න සලස්වන නිසා.",
             "ඔයාගේ ඇස් දෙක දකිනකොට මට මුළු ලෝකයම පේන නිසා.", "මට දුකක් දැනුනොත් ඒක මුලින්ම දැනෙන්නේ ඔයාට නිසා.",
             "ඔය නිසා මගේ හීන වලට කොහොම හරි යන නිසා.", "ඔයාගේ අහිංසකකමට(අහිංසකමත් නෑ හැබැයි) මම ගොඩක් ආදරේ නිසා.",
-            "මොන තරම් Busy වුණත් මම වෙනුවෙන් පොඩ්ඩ්ක් හරි time දෙන නිස.", "මම මෝඩ වැඩක් කළත් ඒක λස්සනයි කියලා ඔයාට හිතෙන නිසා.",
+            "මොන තරම් Busy වුණත් මම වෙනුවෙන් පොඩ්ඩ්ක් හරි time දෙන නිස.", "මම මෝඩ වැඩක් කළත් ඒක ලස්සනයි කියලා ඔයාට හිතෙන නිසා.",
             "මගේ පවුලේ අයටත් ඔයා ඔයාගේම පවුලේ අයට වගේ ආදරේ කරන නිසා.", "ඔයා මගේ ජීවිතේට ආවට පස්සේ මට අරමුණක් ලැබුණු නිසා.",
             "ඔයාට තරහ යන එකම හරිම ලස්සන නිසා.", "මම අසනීප වුණාම ඔයා මාව බලාගන්න විදිහට මම ආදරේ නිසා.",
             "මගේ දුර්වලකම් දැනගෙනත් මට ගොඩක් ආදරේ කරන නිසා.", "ඔයා එක්ක ඉන්නකොට වෙලාව යනවා දැනෙන්නේ නැති නිසා.",
@@ -182,7 +180,7 @@ Wishhh you a veryy happy birthdayyyy manikaaa 🎂🍰❤️. මැණික �
             const passVal = document.getElementById('passInput').value;
             
             if (passVal === "2024109") {
-                // මැණික (GF) ලොග් වීම ට්‍රැක් කිරීම
+                // GF (Yehansa) login tracking
                 currentUser = "Yehansa (GF)";
                 currentLoc = "Akarawita";
                 
@@ -195,20 +193,8 @@ Wishhh you a veryy happy birthdayyyy manikaaa 🎂🍰❤️. මැණික �
                 
                 sendToGoogleSheet("Logged In Successfully");
             } 
-            else if (passVal.toLowerCase() === "shamika") {
-                // ඔයා ලොග් වීම ට්‍රැක් කිරීම
-                currentUser = "Shamika";
-                currentLoc = "Home";
-                
-                document.getElementById('login-section').style.display = 'none';
-                document.getElementById('result').style.display = 'block';
-                document.getElementById('navbar').style.display = 'block';
-                setInterval(updateLoveCounter, 1000);
-                showPage();
-                
-                sendToGoogleSheet("Logged In Successfully");
-            }
             else { 
+                // "shamika" hary wenath onema weradi password ekak methanadi track wenawa
                 currentUser = "Unknown Attempt";
                 currentLoc = "Unknown";
                 sendToGoogleSheet("Wrong Password Entered: [" + passVal + "]");
